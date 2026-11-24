@@ -1,0 +1,6 @@
+﻿documento;primer_nombre;segundo_nombre;primer_apellido;segundo_apellido;sexo;tipo_afiliacion;vencimiento_ayex;fecha_nacimiento;telefono;correo;profesional_responsable;sucursal
+1.234.567-8;Ana;Laura;Ejemplo;Ficticia;F;Privado;;14/03/1990;099 000 001;ana.ejemplo@correo.test;;Central
+2.345.678-9;Bruno;;Ejemplo;Inventado;M;AYEX;31/12/2026;02/07/1985;099 000 002;;;Pando
+3.456.789-0;Carla;;Ejemplo;;F;Tutela Militar;;23/11/2001;;;;Anexo
+;Diego;;Ejemplo;Simulado;M;Privado;;09/05/2012;099 000 004;;;Pando
+4.567.890-1;Elena;;Ejemplo;Muestra;X;Tutela Policial;;;099 000 005;;;Central

@@ -1,0 +1,36 @@
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# Node.js
+node_modules/
+dist/
+build/
+
+# Secretos y variables de entorno
+.env
+.env.*
+!.env.example
+
+# Sistema y editores
+.DS_Store
+.idea/
+
+# Bases de datos locales
+*.sqlite3
+*.db
+
+# Archivos adjuntos de pacientes (datos clínicos: nunca a Git)
+backend/storage/
+
+# Planillas con datos de pacientes (importaciones y exportaciones): nunca a Git.
+# Solo se versionan el ejemplo ficticio de la documentación y la planilla VACÍA del BPS.
+*.csv
+*.xlsx
+*.xls
+!docs/ejemplo-importacion-pacientes.csv
+!backend/app/forms/cronograma_bps.xlsx

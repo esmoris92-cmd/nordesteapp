@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# (Servidor) Después de la copia nocturna: deja las copias más recientes en la carpeta de
+# entrega, que solo puede leer la cuenta "lumencopia" (la que usa tu Mac para bajarlas).
+# Lo ejecuta systemd como root al terminar lumen-copia.service. Lo instala instalar.sh.
+set -euo pipefail
+umask 027
+ORIGEN="${LUMEN_COPIAS_ORIGEN:-/opt/medflow/copias}"
+ENTREGA="${LUMEN_COPIAS_ENTREGA:-/var/lib/lumen-entrega}"
+GRUPO="${LUMEN_COPIAS_GRUPO:-lumencopia}"
+CONSERVAR=3   # en la carpeta de entrega alcanza con las últimas (las 14 quedan en ORIGEN)
+
+mkdir -p "$ENTREGA"
+chown "root:$GRUPO" "$ENTREGA"
+chmod 750 "$ENTREGA"
+
+# Las CONSERVAR copias diarias más recientes (el nombre lleva la fecha: orden cronológico).
+mapfile -t ultimas < <(find "$ORIGEN" -maxdepth 1 -type f -name 'medflow-copia-*.tar.gz' -printf '%f\n' | sort | tail -n "$CONSERVAR")
+if [ "${#ultimas[@]}" -eq 0 ]; then
+  echo "No hay copias en $ORIGEN."
+  exit 1
+fi
+for nombre in "${ultimas[@]}"; do
+  if [ ! -f "$ENTREGA/$nombre" ]; then
+    cp "$ORIGEN/$nombre" "$ENTREGA/.$nombre.parcial"
+    chown "root:$GRUPO" "$ENTREGA/.$nombre.parcial"
+    chmod 640 "$ENTREGA/.$nombre.parcial"
+    mv "$ENTREGA/.$nombre.parcial" "$ENTREGA/$nombre"   # aparece completa o no aparece
+  fi
+done
+# Borra de la entrega lo que ya no está entre las últimas.
+for archivo in "$ENTREGA"/medflow-copia-*.tar.gz; do
+  [ -e "$archivo" ] || continue
+  nombre="$(basename "$archivo")"
+  if ! printf '%s\n' "${ultimas[@]}" | grep -qxF "$nombre"; then
+    rm -f "$archivo"
+  fi
+done
+echo "Copias disponibles para bajar: ${ultimas[*]}"

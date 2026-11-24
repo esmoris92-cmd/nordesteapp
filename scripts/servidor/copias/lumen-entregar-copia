@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# (Servidor) Lo ÚNICO que puede hacer la cuenta "lumencopia" por SSH: listar y enviar las
+# copias de la carpeta de entrega. Está fijado en su authorized_keys (command="..."), así que
+# esa llave no sirve para abrir una terminal ni para ninguna otra cosa en el servidor.
+#
+#   lista           una línea por copia: NOMBRE TAMAÑO SHA256 (de la más vieja a la más nueva)
+#   enviar NOMBRE   manda esa copia por la salida estándar
+set -euo pipefail
+ENTREGA="${LUMEN_COPIAS_ENTREGA:-/var/lib/lumen-entrega}"
+PATRON='^medflow-copia-[0-9]{4}-[0-9]{2}-[0-9]{2}_[0-9]{6}\.tar\.gz$'
+cd /   # no depende de la carpeta desde donde se llame
+
+read -r -a pedido <<< "${SSH_ORIGINAL_COMMAND:-}"
+case "${pedido[0]:-}" in
+  lista)
+    [ "${#pedido[@]}" -eq 1 ] || { echo "Uso: lista" >&2; exit 2; }
+    find "$ENTREGA" -maxdepth 1 -type f -name 'medflow-copia-*.tar.gz' -printf '%f\n' | sort |
+      while read -r nombre; do
+        [[ "$nombre" =~ $PATRON ]] || continue
+        tamano="$(stat -c %s "$ENTREGA/$nombre")"
+        huella="$(sha256sum "$ENTREGA/$nombre" | cut -d' ' -f1)"
+        echo "$nombre $tamano $huella"
+      done
+    ;;
+  enviar)
+    nombre="${pedido[1]:-}"
+    if [ "${#pedido[@]}" -ne 2 ] || ! [[ "$nombre" =~ $PATRON ]] || [ ! -f "$ENTREGA/$nombre" ]; then
+      echo "No existe esa copia." >&2
+      exit 2
+    fi
+    cat "$ENTREGA/$nombre"
+    ;;
+  *)
+    echo "Esta llave solo sirve para bajar las copias de seguridad de Lumen." >&2
+    exit 2
+    ;;
+esac

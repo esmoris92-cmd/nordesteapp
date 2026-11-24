@@ -1,0 +1,12 @@
+# Dependencias de ejecución del backend de MedFlow.
+# Se instalan con:  python -m pip install -r requirements.txt
+# Las versiones están acotadas para que ambas Macs (Intel y M1) instalen lo mismo.
+fastapi>=0.115,<1.0          # framework web de la API
+uvicorn>=0.30,<1.0           # servidor que ejecuta la API
+sqlalchemy>=2.0.30,<2.1      # acceso a la base de datos (consultas parametrizadas)
+alembic>=1.13,<2.0           # migraciones de la base de datos
+psycopg[binary]>=3.2,<3.4    # controlador de PostgreSQL
+pydantic>=2.7,<3.0           # validación de datos
+pydantic-settings>=2.3,<3.0  # lectura de configuración desde .env
+argon2-cffi>=23.1,<26.0      # hash seguro de contraseñas (Argon2id)
+pypdf>=6.0,<7.0             # completar el formulario PDF de AYEX del BPS (solo Python)
