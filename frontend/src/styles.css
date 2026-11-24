@@ -11,8 +11,8 @@
   --brand-soft: #e6eefb;
   --accent-red: #f0182d;      /* solo decorativo: no usar para texto */
   --accent-green: #b1de23;    /* solo decorativo: no usar para texto (poco contraste) */
-  --banner-from: #0a3b8f;     /* degradado de la cabecera de la ficha */
-  --banner-to: #0e4db7;
+  --banner-from: #6f4a08;     /* degradado de la cabecera de la ficha (tostado) */
+  --banner-to: #a06d14;
 
   /* Colores del modo claro (también se usan siempre en las hojas para imprimir) */
   --bg: #fafaf3;
@@ -745,8 +745,8 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
   --nav-chip-bg: #eef8cc;
   --nav-chip-ink: #3d6b00;
   --nav-chip-line: #cfe98a;
-  --nav-active-bg: #0e4db7;
-  --nav-active-ink: #ffffff;
+  --nav-active-bg: #dcc77f;   /* arena oscuro: sección activa del menú */
+  --nav-active-ink: #2e2608;
   --nav-indicator: var(--accent-red);
   --nav-edge: #ebe9d6;
   /* Color al pasar el mouse por botones, pestañas y opciones (arena cálido). */
@@ -755,8 +755,10 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
   --hover-ink: #3f3510;
   --hover-shadow: 0 6px 14px -4px rgba(120, 100, 30, 0.28);
   --stripe-blue: #0e4db7;
-  --primary-bg: linear-gradient(135deg, #1d63dc, #0e4db7);
-  --primary-bg-hover: linear-gradient(135deg, #b9861f, #94650f);   /* tostado: sin azul al pasar el mouse */
+  --primary-bg: linear-gradient(135deg, #a06d14, #7f540a);   /* tostado: botón principal */
+  --accent-warm: #8a5c0d;
+  --accent-warm-rgb: 138, 92, 13;
+  --primary-bg-hover: linear-gradient(135deg, #8a5c0d, #694406);   /* tostado más oscuro al pasar el mouse */
   --primary-glow-hover: 0 8px 18px -6px rgba(148, 101, 15, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   --login-bg:
     radial-gradient(700px 500px at 10% 0%, rgba(177, 222, 35, 0.28), transparent 60%),
@@ -764,7 +766,8 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
     #fdfde8;
   --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 12px 28px -16px rgba(14, 40, 100, 0.18);
   --shadow-card-hover: 0 1px 2px rgba(16, 24, 40, 0.05), 0 22px 40px -18px rgba(120, 95, 30, 0.28);
-  --glow: 0 8px 20px -10px rgba(var(--brand-rgb), 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  --glow: 0 8px 20px -10px rgba(120, 85, 15, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  --focus: 0 0 0 3px rgba(160, 109, 20, 0.35);
 }
 :root, .print-page { --bg: #fbfbf4; --line: #ebe9d6; }
 body { -webkit-font-smoothing: antialiased; }
@@ -881,7 +884,10 @@ input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 4px rgba(var(--bra
 .branch-choice:hover { background: var(--hover-bg); border-color: var(--hover-line); }
 .picker-results button:hover, .picker-results [role="option"]:hover { background: var(--hover-bg); }
 .topbar nav a:hover { color: var(--hover-ink); }
-.tab.active { background: var(--brand); color: #fff; box-shadow: var(--glow); }
+.topbar nav a[aria-current="page"]:hover { background: var(--nav-active-bg); color: var(--nav-active-ink); filter: brightness(0.97); }
+/* Pestañas activas en tostado, como el botón principal. */
+.tab.active, .ptab.active { background: var(--accent-warm); color: #fff; }
+.tab.active { box-shadow: var(--glow); }
 .patient-tabs { border-radius: 0 0 var(--radius) var(--radius); }
 .ptab { border-radius: 999px; }
 .ptab.active { box-shadow: var(--glow); }
@@ -1028,7 +1034,7 @@ p.muted[role="status"] { animation: pulse 1.1s ease-in-out infinite; }
     --nav-from: #191b17; --nav-to: #1d201a; --nav-ink: #c9cfbf; --nav-ink-strong: #f2f4ea; --nav-muted: #9aa290;
     --nav-hover: #3a3522; --nav-line: rgba(255, 255, 255, 0.08); --nav-btn-bg: rgba(255, 255, 255, 0.04);
     --nav-btn-line: rgba(255, 255, 255, 0.14); --nav-chip-bg: rgba(198, 234, 90, 0.14); --nav-chip-ink: #d8f08a;
-    --nav-chip-line: rgba(198, 234, 90, 0.35); --nav-active-bg: #1d63dc; --nav-active-ink: #fff; --nav-edge: #2b2e28;
+    --nav-chip-line: rgba(198, 234, 90, 0.35); --nav-active-bg: #a06d14; --nav-active-ink: #fff; --nav-edge: #2b2e28;
     --hover-bg: #3a3522; --hover-line: #6b5f33; --hover-ink: #f3e7b4; --hover-shadow: 0 6px 14px -4px rgba(0, 0, 0, 0.6);
     --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -28px rgba(0, 0, 0, 0.8);
     --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 26px 50px -26px rgba(0, 0, 0, 0.9);
@@ -1040,7 +1046,8 @@ p.muted[role="status"] { animation: pulse 1.1s ease-in-out infinite; }
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008)), var(--surface);
     border-color: var(--line);
   }
-  :root[data-theme="dark"] .tab.active, :root[data-theme="dark"] .ptab.active { color: #fff; background: #1a5fd6; }
+  :root[data-theme="dark"] .tab.active, :root[data-theme="dark"] .ptab.active { color: #fff; background: #a06d14; }
+  :root[data-theme="dark"] { --focus: 0 0 0 3px rgba(220, 199, 127, 0.4); }
 }
 
 /* Botón para cambiar entre modo claro y oscuro (esquina inferior derecha) */
