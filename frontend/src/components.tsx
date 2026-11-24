@@ -129,7 +129,7 @@ export function ToastHost() {
   );
 }
 
-/** Logo de Lumen (la marca, sin el nombre). Dibujado en SVG para que se vea nítido en
+/** Logo de Nordeste (la marca, sin el nombre). Dibujado en SVG para que se vea nítido en
  * cualquier tamaño; es una versión del logo original de la marca. */
 export function Logo({ size = 34 }: { size?: number }) {
   return (

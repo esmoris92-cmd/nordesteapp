@@ -434,7 +434,7 @@ function CloseForm({ register, onClosed }: { register: CashRegister; onClosed: (
   return (
     <Card title="Cierre de caja">
       <p className="muted small">
-        Al terminar el día, contá el efectivo e ingresá el total. Lumen lo compara con lo que debería haber
+        Al terminar el día, contá el efectivo e ingresá el total. Nordeste lo compara con lo que debería haber
         ({fmtMoney(register.expected_amount)}).
       </p>
       <form className="grid-form" onSubmit={submit}>

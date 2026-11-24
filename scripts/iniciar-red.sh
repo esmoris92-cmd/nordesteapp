@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Arranca Lumen para usarlo desde OTROS equipos conectados al MISMO Wi-Fi o red
+# Arranca Nordeste para usarlo desde OTROS equipos conectados al MISMO Wi-Fi o red
 # (por ejemplo, para una demostración). Para detenerlo: Ctrl + C.
 #
 #   bash scripts/iniciar-red.sh
@@ -24,7 +24,7 @@ if [ ! -f ../frontend/dist/index.html ]; then
   exit 1
 fi
 if lsof -iTCP:$PORT -sTCP:LISTEN >/dev/null 2>&1; then
-  echo "❌ El puerto $PORT ya está en uso: probablemente Lumen ya está encendido en otra"
+  echo "❌ El puerto $PORT ya está en uso: probablemente Nordeste ya está encendido en otra"
   echo "   ventana de la Terminal. Andá a esa ventana y apretá Ctrl + C para detenerlo."
   exit 1
 fi
@@ -47,7 +47,7 @@ fi
 
 source .venv/bin/activate
 echo ""
-echo "▶️  Lumen está abierto en la red. Desde otro equipo del MISMO Wi-Fi, abrí:"
+echo "▶️  Nordeste está abierto en la red. Desde otro equipo del MISMO Wi-Fi, abrí:"
 echo ""
 echo "        http://$IP:$PORT"
 echo ""

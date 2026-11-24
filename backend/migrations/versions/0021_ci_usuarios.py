@@ -1,6 +1,6 @@
 """C.I. (obligatoria) y teléfono de cada cuenta de usuario.
 
-Las cuentas que ya existían quedan sin C.I.: Lumen les muestra un aviso hasta que la completan
+Las cuentas que ya existían quedan sin C.I.: Nordeste les muestra un aviso hasta que la completan
 en "Mi cuenta". La C.I. no puede repetirse dentro de la clínica.
 
 Revision ID: 0021_ci_usuarios

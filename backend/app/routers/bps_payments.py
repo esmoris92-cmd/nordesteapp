@@ -1,12 +1,12 @@
 """Control de los pagos AYEX del BPS.
 
-Administración sube el PDF "Detalle de Item Facturable" que manda el BPS cada mes y Lumen
+Administración sube el PDF "Detalle de Item Facturable" que manda el BPS cada mes y Nordeste
 devuelve solo lo que hay que revisar:
 
 * **Pago menor / pago mayor:** el importe no es el arancel AYEX de la clínica
   (multiplicado por la cantidad de la fila).
 * **No figura en el PDF:** paciente AYEX activo de la clínica que el BPS no incluyó.
-* **No es paciente / no es AYEX activo:** documento del PDF que no está en Lumen, o que
+* **No es paciente / no es AYEX activo:** documento del PDF que no está en Nordeste, o que
   está pero no como AYEX activo.
 * **Repetido:** el mismo documento dos veces en el mismo mes.
 
@@ -55,7 +55,7 @@ KIND_LABELS: dict[str, str] = {
     "overpaid": "Pago mayor",
     "not_in_bps": "No figura en el PDF",
     "not_patient": "No es paciente de la clínica",
-    "not_ayex": "No es AYEX activo en Lumen",
+    "not_ayex": "No es AYEX activo en Nordeste",
     "duplicate": "Repetido en el PDF",
 }
 _STATUS_LABELS = {"active": "Activo", "paused": "En pausa", "discharged": "Alta", "inactive": "Inactivo"}
@@ -144,12 +144,12 @@ def _compare(db: Session, clinic_id, fee: Decimal, statement: BpsStatement) -> C
                                    difference=float(row.amount - expected), note=note, **base))
         if patient is None:
             problem = True
-            issues.append(IssueOut(kind="not_patient", note="No hay ningún paciente con ese documento en Lumen.",
+            issues.append(IssueOut(kind="not_patient", note="No hay ningún paciente con ese documento en Nordeste.",
                                    **base))
         elif not is_active_ayex(patient):
             problem = True
             issues.append(IssueOut(kind="not_ayex", note=(
-                f"En Lumen figura como {AFFILIATION_LABELS.get(patient.affiliation, patient.affiliation)}, "
+                f"En Nordeste figura como {AFFILIATION_LABELS.get(patient.affiliation, patient.affiliation)}, "
                 f"{_STATUS_LABELS.get(patient.status, patient.status).lower()}."), **base))
         if not problem:
             ok_count += 1
@@ -165,7 +165,7 @@ def _compare(db: Session, clinic_id, fee: Decimal, statement: BpsStatement) -> C
             continue
         note = None
         if not key:
-            note = "No tiene documento cargado en Lumen: no se puede buscar en el PDF."
+            note = "No tiene documento cargado en Nordeste: no se puede buscar en el PDF."
         elif p.ayex_expires_on and first_month and p.ayex_expires_on < first_month:
             note = f"Su AYEX venció el {p.ayex_expires_on:%d/%m/%Y}."
         issues.append(IssueOut(kind="not_in_bps", document=p.document_number, name=_full_name(p),

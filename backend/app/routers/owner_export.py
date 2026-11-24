@@ -5,7 +5,7 @@ el contrato (al terminar, la clínica recibe una copia completa de sus datos). P
 
 * Solo el dueño con su sesión completa (contraseña + código del celular).
 * Hay que escribir el motivo y el nombre de la clínica para confirmar.
-* Queda en la auditoría del dueño y también en la de la clínica (como "Soporte de Lumen").
+* Queda en la auditoría del dueño y también en la de la clínica (como "Soporte de Nordeste").
 
 Cómo se descarga (en dos pasos, para que un .zip de varios gigas no pase por la memoria del
 navegador):

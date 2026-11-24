@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Arranca Lumen (API + interfaz) en http://localhost:8000
+# Arranca Nordeste (API + interfaz) en http://localhost:8000
 # Funciona desde cualquier carpeta. Para detenerlo: Ctrl + C.
 set -euo pipefail
 cd "$(dirname "$0")/../backend"
@@ -15,11 +15,11 @@ if [ ! -f ../frontend/dist/index.html ]; then
   exit 1
 fi
 if lsof -iTCP:8000 -sTCP:LISTEN >/dev/null 2>&1; then
-  echo "❌ El puerto 8000 ya está en uso: probablemente Lumen ya está encendido en otra"
+  echo "❌ El puerto 8000 ya está en uso: probablemente Nordeste ya está encendido en otra"
   echo "   ventana de la Terminal. Andá a esa ventana y apretá Ctrl + C para detenerlo."
   exit 1
 fi
 
 source .venv/bin/activate
-echo "▶️  Iniciando Lumen en http://localhost:8000  (Ctrl + C para detenerlo)"
+echo "▶️  Iniciando Nordeste en http://localhost:8000  (Ctrl + C para detenerlo)"
 exec uvicorn app.main:app --reload --no-access-log

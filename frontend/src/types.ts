@@ -346,7 +346,7 @@ export interface ResponsiblePatient {
 
 export interface ImportRow {
   line: number;
-  status: "ok" | "error" | "created" | "skipped";  // skipped: ya está en Lumen (Cronograma BPS)
+  status: "ok" | "error" | "created" | "skipped";  // skipped: ya está en Nordeste (Cronograma BPS)
   document_number: string | null;
   full_name: string;
   affiliation: AffiliationType | null;

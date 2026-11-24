@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copias de seguridad de Lumen (base de datos + archivos adjuntos).
+# Copias de seguridad de Nordeste (base de datos + archivos adjuntos).
 #   bash scripts/copia-seguridad.sh                     crea una copia
 #   bash scripts/copia-seguridad.sh verificar           prueba restaurar la última copia
 #   bash scripts/copia-seguridad.sh verificar ARCHIVO   prueba restaurar esa copia

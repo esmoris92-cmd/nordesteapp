@@ -83,7 +83,7 @@ def test_only_admin_can_edit_users(world, login):
 
 
 def test_new_account_gets_temporary_password(world, login, db):
-    """Al crear una cuenta, Lumen genera una contraseña temporal y obliga a cambiarla."""
+    """Al crear una cuenta, Nordeste genera una contraseña temporal y obliga a cambiarla."""
     admin = login(world.admin_a)
     r = admin.post("/api/users", json={
         "email": "nueva.temp@a.test", "full_name": "Nueva Temporal", "role": "reception",

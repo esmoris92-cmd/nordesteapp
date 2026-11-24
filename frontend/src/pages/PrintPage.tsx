@@ -37,7 +37,7 @@ function PrintLayout({ title, health = false, children }: { title: string; healt
             )}
             <strong>{clinic.name}</strong>
           </span>
-          <span className="muted small">Lumen</span>
+          <span className="muted small">Nordeste</span>
         </div>
         <h1>{title}</h1>
       </header>

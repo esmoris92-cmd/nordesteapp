@@ -183,7 +183,7 @@ export const AUDIT_ACTION_LABELS: Record<string, string> = {
   "account.update": "Datos personales actualizados (Mi cuenta)",
   "degree.view": "Consulta de título universitario",
   "degree.download": "Título universitario descargado",
-  "system.clinic_create": "Clínica dada de alta en Lumen",
+  "system.clinic_create": "Clínica dada de alta en Nordeste",
   "system.user_create": "Primer administrador creado",
   "system.clinic_suspended": "Acceso a la clínica suspendido",
   "system.clinic_reactivated": "Acceso a la clínica reactivado",

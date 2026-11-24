@@ -9,7 +9,7 @@ export function ConsultorioPage() {
         <h1>Mi consultorio</h1>
       </div>
       <p className="muted">
-        El nombre y el logo del consultorio salen en el encabezado de Lumen y en lo que imprimís (informes y
+        El nombre y el logo del consultorio salen en el encabezado de Nordeste y en lo que imprimís (informes y
         fichas). Tus datos personales y tu título se cargan en <a href="#/cuenta">Mi cuenta</a>.
       </p>
       <ClinicCard />

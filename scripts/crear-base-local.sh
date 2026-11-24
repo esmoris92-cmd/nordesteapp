@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Crea la base de datos LOCAL de Lumen (solo para desarrollo, con datos ficticios):
+# Crea la base de datos LOCAL de Nordeste (solo para desarrollo, con datos ficticios):
 #   - el usuario "medflow" con una contraseña aleatoria nueva
 #   - las bases "medflow" y "medflow_test"
 #   - el archivo backend/.env con esa contraseña (no se sube a Git)

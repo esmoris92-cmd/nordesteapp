@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
-# Muestra las versiones de las herramientas que necesita Lumen.
+# Muestra las versiones de las herramientas que necesita Nordeste.
 # Solo LEE información: no instala, no cambia ni muestra secretos.
 
 ok()   { printf "✅ %-12s %s\n" "$1" "$2"; }
 warn() { printf "⚠️  %-12s %s\n" "$1" "$2"; }
 
-echo "Lumen — verificación del entorno"
+echo "Nordeste — verificación del entorno"
 echo "Sistema: macOS $(sw_vers -productVersion 2>/dev/null || echo '?') · arquitectura $(uname -m)"
 echo
 
@@ -28,5 +28,5 @@ if command -v psql >/dev/null; then ok PostgreSQL "$(psql --version | awk '{prin
 else warn PostgreSQL "psql no encontrado (ver docs/INSTALACION.md, paso 1)"; fi
 
 if command -v brew >/dev/null; then
-  echo "ℹ️  Homebrew     $(brew --version 2>/dev/null | head -1) en $(command -v brew) (Lumen no lo necesita)"
+  echo "ℹ️  Homebrew     $(brew --version 2>/dev/null | head -1) en $(command -v brew) (Nordeste no lo necesita)"
 fi

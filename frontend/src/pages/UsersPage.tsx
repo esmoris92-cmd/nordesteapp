@@ -424,7 +424,7 @@ export function LogoCard() {
     <Card title={`Logo ${place === "clínica" ? "de la clínica" : "del consultorio"}`}>
       <p className="muted small">
         Sale arriba, junto al nombre {place === "clínica" ? "de la clínica" : "del consultorio"}, en todo lo que se imprime o se guarda como PDF desde
-        Lumen (informes y ficha del paciente). Los formularios de AYEX y del BPS no lo llevan.
+        Nordeste (informes y ficha del paciente). Los formularios de AYEX y del BPS no lo llevan.
         Imagen PNG o JPG de hasta {LOGO_MAX_MB} MB; se ve mejor con fondo blanco o transparente.
       </p>
       <ErrorBox message={error} />
@@ -627,7 +627,7 @@ function NewUserForm({ specialties, branches, onCreated, onCancel }: {
       )}
       <BranchChecklist role={form.role} branches={branches} value={branchIds} onChange={setBranchIds} />
       <p className="span-all muted small" role="note">
-        Lumen genera una contraseña temporal que verás al crear la cuenta. La persona deberá cambiarla
+        Nordeste genera una contraseña temporal que verás al crear la cuenta. La persona deberá cambiarla
         al entrar por primera vez, así nadie más conoce su contraseña.
       </p>
       <div className="form-actions">

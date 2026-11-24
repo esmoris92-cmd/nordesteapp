@@ -1,4 +1,4 @@
-// Confirmación propia de Lumen (reemplaza a window.confirm).
+// Confirmación propia de Nordeste (reemplaza a window.confirm).
 //
 // Las ventanas nativas del navegador pueden estar bloqueadas (por ejemplo, si alguna vez se
 // marcó "no permitir más diálogos de esta página"); en ese caso window.confirm responde

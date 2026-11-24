@@ -30,7 +30,7 @@ Necesitas:
 ### Sobre Homebrew en el M1
 
 En el M1, `brew` responde desde `/usr/local/bin/brew`, pero `~/.zprofile` intenta cargar
-`/opt/homebrew/bin/brew`, que no existe. **Lumen no necesita Homebrew**, así que puedes
+`/opt/homebrew/bin/brew`, que no existe. **Nordeste no necesita Homebrew**, así que puedes
 dejarlo como está. Si más adelante quieres ordenarlo, conviene revisarlo con calma, en una
 sesión aparte, antes de cambiar nada.
 
@@ -49,7 +49,7 @@ Recomendación: **Postgres.app**, que no depende de Homebrew y funciona igual en
 
 **Comprobación:** `psql --version` debe mostrar una versión, por ejemplo `psql (PostgreSQL) 16.x`.
 
-### Crear el usuario y las bases de Lumen
+### Crear el usuario y las bases de Nordeste
 
 **Forma rápida (recomendada):** desde la carpeta `medflow`, con Postgres.app en “Running”:
 
@@ -113,15 +113,17 @@ open -e .env
 En el editor, reemplaza las **dos** apariciones de `cambia-esta-clave-local` por
 `TU_CLAVE_LOCAL` y guarda. `.env` está en `.gitignore`, así que **nunca se sube a GitHub**.
 
-Crea las tablas (migraciones) y carga los datos ficticios:
+Crea las tablas (migraciones) y la clínica con sus sucursales:
 
 ```bash
 alembic upgrade head
-python -m app.seed
+python -m app.instalar_clinica
 ```
 
-**Qué deberías ver:** primero `Running upgrade  -> 0001_inicial` (para comprobarlo después: `alembic current` muestra `0001_inicial (head)`), y después
-`Datos de demostración (ficticios) cargados.` junto con la lista de cuentas.
+**Qué deberías ver:** primero las líneas `Running upgrade …` y después
+`✅ Centro Interdisciplinario Nordeste creada con las sucursales Central, Anexo, Pando.`, con el
+correo de Administración y una **contraseña temporal** (anótala: no se vuelve a mostrar). No
+se cargan datos de demostración: las demás cuentas se crean desde *Usuarios*.
 
 Arranca la API:
 
@@ -209,7 +211,7 @@ bash ~/Developer/medflow/scripts/copia-seguridad.sh
 ```
 
 **Qué deberías ver:** `✅ Copia creada: /Users/…/MedFlow-copias/medflow-copia-FECHA.tar.gz`
-con el tamaño y cuántos pacientes contiene. Puedes hacerlo con Lumen encendido.
+con el tamaño y cuántos pacientes contiene. Puedes hacerlo con Nordeste encendido.
 
 Una copia que nunca se probó no es confiable. Para comprobar que se puede restaurar:
 
@@ -221,16 +223,16 @@ Restaura la última copia en la base de **pruebas** (`medflow_test`), cuenta las
 compara y deja esa base vacía. **No toca tus datos.** Deberías ver
 `✅ La copia está completa y se restauró bien…`.
 
-Para **volver** Lumen al estado de una copia (por ejemplo, después de un error grave):
+Para **volver** Nordeste al estado de una copia (por ejemplo, después de un error grave):
 
-1. Detén Lumen (Ctrl + C en su Terminal).
+1. Detén Nordeste (Ctrl + C en su Terminal).
 2. Ejecuta, con el nombre real del archivo:
    ```bash
    bash ~/Developer/medflow/scripts/copia-seguridad.sh restaurar ~/MedFlow-copias/medflow-copia-FECHA.tar.gz
    ```
 3. Escribe `RESTAURAR` cuando lo pida. Antes de reemplazar nada guarda una copia del estado
    actual (`medflow-antes-de-restaurar-…`) y aparta los adjuntos actuales sin borrarlos.
-4. Ejecuta `alembic upgrade head` y vuelve a iniciar Lumen.
+4. Ejecuta `alembic upgrade head` y vuelve a iniciar Nordeste.
 
 ### Copias automáticas cada día
 
@@ -256,7 +258,7 @@ computadora. Si quieres otra carpeta, define `BACKUP_DIR` en `backend/.env`.
 
 ## 4 ter. Sucursales
 
-Al actualizar la base (`alembic upgrade head`), Lumen crea la sucursal **Central** y le
+Al actualizar la base (`alembic upgrade head`), Nordeste crea la sucursal **Central** y le
 asigna todas las cuentas existentes. Para agregar otras (por ejemplo Pando y Anexo):
 
 1. Entra como administración → **Usuarios** → tarjeta **Sucursales** → escribe el nombre →
@@ -283,10 +285,10 @@ El profesional tiene que tener esa sucursal marcada en **Usuarios**.
 
 ## 4 quater. Mostrarlo en otros equipos de la misma red (demostración)
 
-Para probar Lumen desde otra computadora, tablet o celular **conectado al mismo Wi-Fi** que
+Para probar Nordeste desde otra computadora, tablet o celular **conectado al mismo Wi-Fi** que
 tu Mac (por ejemplo, recepción en un equipo y un profesional en otro):
 
-1. Detén Lumen si está encendido (`Control + C` en su Terminal).
+1. Detén Nordeste si está encendido (`Control + C` en su Terminal).
 2. Arráncalo en modo red:
 
    ```bash
@@ -305,40 +307,6 @@ lo uses en un Wi-Fi público ni en el de pacientes. Si la dirección no abre, re
 equipos estén en el mismo Wi-Fi y que el firewall de la Mac (Ajustes del Sistema → Red →
 Firewall) permita conexiones a Python. La dirección puede cambiar de un día a otro: el script
 siempre muestra la actual.
-
-## 4 quinquies. Mostrarlo por internet con un enlace temporal (demostración)
-
-Para mostrar Lumen desde **otra sucursal o cualquier lugar**, sin servidor contratado ni
-costo, se puede usar un *Quick Tunnel* de Cloudflare: tu Mac sigue siendo el servidor y
-Cloudflare da un enlace `https://….trycloudflare.com` que funciona mientras esté abierto.
-
-> Es **solo para demostraciones con datos ficticios**: Cloudflare lo ofrece para pruebas,
-> sin garantía, y quien tenga el enlace llega a la pantalla de ingreso. No es la forma de
-> usar Lumen en la clínica: para eso hace falta un servidor propio o contratado.
-
-**Una sola vez: descargar `cloudflared`** (el programa oficial de Cloudflare, desde su página
-de GitHub; no usa Homebrew). En la Terminal:
-
-```bash
-mkdir -p ~/MedFlow-herramientas && cd ~/MedFlow-herramientas
-# Mac con chip Apple (M1, M2…): arm64.  Mac con Intel: cambia arm64 por amd64.
-curl -L -o cloudflared.tgz https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-darwin-arm64.tgz
-tar xzf cloudflared.tgz && rm cloudflared.tgz && chmod +x cloudflared
-```
-
-**Antes de cada demostración: cambiar las contraseñas de demostración.** Figuran en este
-README, así que cualquiera podría entrar con ellas. El script lo revisa y no arranca si alguna
-cuenta activa todavía la usa (te dice cuáles).
-
-**Para abrirlo** (con Lumen detenido):
-
-```bash
-bash scripts/demo-internet.sh
-```
-
-Escribe `SI` para confirmar. Verás el enlace `https://….trycloudflare.com`: ábrelo en tu Mac y
-compártelo con quien corresponda. Con `Control + C` se cierra y el enlace deja de funcionar
-(la próxima vez será otro).
 
 ## 5. Pasar de una Mac a la otra
 
@@ -364,5 +332,5 @@ En la segunda Mac, repite los pasos 1 a 3. Cada base local tiene sus propios dat
 | `No module named 'app'` al arrancar | `uvicorn` se ejecutó fuera de `backend` | Usa `bash scripts/iniciar.sh`, o entra a `backend` antes |
 | La página dice “falta compilar la interfaz” | No existe `frontend/dist` | `npm run build` y reinicia el backend |
 | `npm: command not found` | Falta Node.js | Instala la versión LTS desde nodejs.org |
-| No puedes iniciar sesión tras varios intentos | Bloqueo de 15 minutos tras 5 fallos | Espera, o vuelve a cargar la demo con `python -m app.seed --reiniciar` (borra los datos locales) |
+| No puedes iniciar sesión tras varios intentos | Bloqueo de 15 minutos tras 5 fallos | Espera 15 minutos, o pide a Administración que restablezca la contraseña |
 | Un turno da “fuera de la disponibilidad” | La hora no cae en un bloque de disponibilidad | Revisa la disponibilidad del profesional en Agenda |

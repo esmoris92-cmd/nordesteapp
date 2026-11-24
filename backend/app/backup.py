@@ -1,4 +1,4 @@
-"""Copias de seguridad de Lumen: crear, verificar y restaurar.
+"""Copias de seguridad de Nordeste: crear, verificar y restaurar.
 
 Uso (desde la carpeta del proyecto, con el script que activa el entorno):
 
@@ -332,7 +332,7 @@ def _summary(manifest: dict) -> str:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="copia-seguridad", description="Copias de seguridad de Lumen.")
+    parser = argparse.ArgumentParser(prog="copia-seguridad", description="Copias de seguridad de Nordeste.")
     sub = parser.add_subparsers(dest="accion")
     p_new = sub.add_parser("crear", help="crea una copia (acción por defecto)")
     p_new.add_argument("--conservar", type=int, metavar="N",
@@ -369,7 +369,7 @@ def main(argv: list[str] | None = None) -> int:
         elif action == "restaurar":
             path = Path(args.archivo).expanduser()
             if _server_running():
-                raise BackupError("Lumen está en funcionamiento. Detenelo (Ctrl + C en su Terminal) "
+                raise BackupError("Nordeste está en funcionamiento. Detenelo (Ctrl + C en su Terminal) "
                                   "y volvé a intentarlo.")
             with tempfile.TemporaryDirectory() as tmp:
                 _, manifest = _extract(path, Path(tmp))

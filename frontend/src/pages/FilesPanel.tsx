@@ -26,7 +26,7 @@ export function FilesPanel({ patientId, institutionId, title = "Archivos del pac
   const [viewing, setViewing] = useState<PatientFile | null>(null);
 
   /** En el celular, un PDF dentro de una ventana muestra solo la primera página (iPhone): se
-   * abre en otra pestaña con el visor del teléfono. En la computadora, en la ventana de Lumen. */
+   * abre en otra pestaña con el visor del teléfono. En la computadora, en la ventana de Nordeste. */
   function view(f: PatientFile) {
     const small = window.matchMedia?.("(max-width: 640px)").matches;
     if (small && f.content_type === "application/pdf") {
@@ -211,8 +211,8 @@ function WithdrawForm({ file, onDone }: { file: PatientFile; onDone: (ok: boolea
   );
 }
 
-/** Visor dentro de Lumen: el PDF o la imagen se muestra en una ventana, sin descargarlo.
- * El servidor lo envía para verse "en línea" y solo deja mostrarlo dentro de Lumen. */
+/** Visor dentro de Nordeste: el PDF o la imagen se muestra en una ventana, sin descargarlo.
+ * El servidor lo envía para verse "en línea" y solo deja mostrarlo dentro de Nordeste. */
 function FileViewer({ file, onClose }: { file: PatientFile; onClose: () => void }) {
   return (
     <DocumentViewer name={file.original_name} contentType={file.content_type} alt={file.description ?? undefined}
@@ -221,7 +221,7 @@ function FileViewer({ file, onClose }: { file: PatientFile; onClose: () => void 
   );
 }
 
-/** Ventana para ver un PDF o una imagen dentro de Lumen, sin descargarlo. */
+/** Ventana para ver un PDF o una imagen dentro de Nordeste, sin descargarlo. */
 export function DocumentViewer({ name, contentType, src, downloadUrl, alt, onClose }: {
   name: string; contentType: string; src: string; downloadUrl: string; alt?: string; onClose: () => void;
 }) {

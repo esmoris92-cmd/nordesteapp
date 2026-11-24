@@ -421,7 +421,7 @@ function PatientEditForm({ patient, onClose }: {
   );
 }
 
-/** Descarga del formulario de AYEX del BPS, completado con los datos que Lumen tiene. Avisa
+/** Descarga del formulario de AYEX del BPS, completado con los datos que Nordeste tiene. Avisa
  * qué falta en la ficha para que salga completo (lo demás se completa a mano en el PDF). */
 function AyexFormLink({ patient: p }: { patient: PatientDetail }) {
   const missing = [

@@ -264,7 +264,7 @@ function Shell() {
         <div className="brand">
           <Logo />
           <div>
-            <strong>Lumen</strong>
+            <strong>Nordeste</strong>
             <small>{clinic.name}</small>
             {!titular && (
             <div className="branch-badge">

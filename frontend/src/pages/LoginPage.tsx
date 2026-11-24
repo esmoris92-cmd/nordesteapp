@@ -27,7 +27,7 @@ export function LoginPage({ notice, onLogin }: Props) {
     <main className="login">
       <form className="card login-card" onSubmit={submit} noValidate={false}>
         <h1>
-          <Logo /> Lumen
+          <Logo /> Nordeste
         </h1>
         <p className="muted">Gestión clínica para centros de salud.</p>
         {notice?.tone === "ok" ? <SuccessBox message={notice.text} /> : <WarnBox message={notice?.text} />}

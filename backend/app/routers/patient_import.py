@@ -3,7 +3,7 @@ la planilla del Cronograma de Actividades del BPS (.xlsx).
 
 Cronograma BPS: se leen los pacientes de la hoja USUARIOS (documento, apellidos, nombres,
 teléfono y dirección; las mismas columnas que llena "Exportar a Cronograma BPS"). Entran
-como pacientes AYEX. Los que ya están en Lumen (mismo documento) se saltean sin dar error,
+como pacientes AYEX. Los que ya están en Nordeste (mismo documento) se saltean sin dar error,
 porque el cronograma de cada mes repite a todos los pacientes. Los horarios de las hojas
 LUN a SAB no se importan.
 
@@ -104,7 +104,7 @@ _DATE_FORMATS = ("%d/%m/%Y", "%d-%m-%Y", "%d.%m.%Y", "%Y-%m-%d")
 
 class ImportRowOut(BaseModel):
     line: int
-    status: str  # "ok", "error", "created" o "skipped" (ya está en Lumen; solo Cronograma BPS)
+    status: str  # "ok", "error", "created" o "skipped" (ya está en Nordeste; solo Cronograma BPS)
     document_number: str | None = None
     full_name: str = ""
     affiliation: str | None = None
@@ -246,7 +246,7 @@ _APARTMENT_RE = re.compile(r"^(.*?)[\s,]+(?:apto|apt|ap)\b\.?\s*(?:n[°º]\s*)?(
 
 def _split_address(text: str) -> dict[str, str]:
     """La dirección viene en un solo texto. Si termina en un departamento (como la escribe
-    Lumen al exportar: "Calle 1234 apto 5, Localidad, Departamento") se separa en partes;
+    Nordeste al exportar: "Calle 1234 apto 5, Localidad, Departamento") se separa en partes;
     si no, va entera en "Calle" y se puede ordenar después en la ficha del paciente."""
     text = " ".join(text.split())
     parts = [p.strip() for p in text.split(",") if p.strip()]
@@ -356,7 +356,7 @@ def _check_rows(db: Session, user: CurrentUser, data: bytes):
             prof = professionals.get(key.lower()) or professionals.get(_normalize(key))
             if prof is None:
                 errors.append("Profesional responsable no encontrado: escribí su correo o su nombre "
-                              "completo tal como figura en Lumen.")
+                              "completo tal como figura en Nordeste.")
 
         payload = None
         try:
@@ -369,7 +369,7 @@ def _check_rows(db: Session, user: CurrentUser, data: bytes):
                 errors.append(f"{_FIELD_LABELS.get(field, field)}: {validation_message(err)}")
 
         doc = payload.document_number if payload else None
-        # Cronograma BPS: trae a todos los AYEX, también a los que ya están en Lumen. Esos se
+        # Cronograma BPS: trae a todos los AYEX, también a los que ya están en Nordeste. Esos se
         # saltean (no es un error, aunque algún dato de la planilla esté mal escrito).
         known = doc or fields.get("document_number")
         skipped = source == "bps" and bool(known) and _doc_key(known) in existing_docs
@@ -396,7 +396,7 @@ def _check_rows(db: Session, user: CurrentUser, data: bytes):
             responsible_name=prof.full_name if prof else (raw.get("responsible") or None),
             branch_name=branch.name if branch else (raw.get("branch") or None),
             errors=errors,
-            note="Ya está en Lumen: no se vuelve a cargar." if skipped else None,
+            note="Ya está en Nordeste: no se vuelve a cargar." if skipped else None,
         )
         checked.append((row, None if errors or skipped else payload, prof))
     return checked, ignored, source

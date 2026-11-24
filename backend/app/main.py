@@ -1,4 +1,4 @@
-"""Punto de entrada de la API de Lumen.
+"""Punto de entrada de la API de Nordeste.
 
 Ejecutar en desarrollo (desde la carpeta backend, con el entorno virtual activo):
     uvicorn app.main:app --reload --no-access-log
@@ -28,7 +28,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name
 settings = get_settings()
 
 app = FastAPI(
-    title="Lumen API",
+    title="Nordeste API",
     version="0.1.0",
     # La documentación interactiva solo se publica en desarrollo.
     docs_url=None if settings.is_production else "/api/docs",
@@ -76,7 +76,7 @@ async def security_headers_and_log(request: Request, call_next):
     if path.startswith("/api/docs"):
         pass  # la documentación interactiva (solo desarrollo) usa recursos externos
     elif _is_file_view(request, response):
-        # Visor de archivos: el PDF o la imagen se muestra DENTRO de Lumen (mismo origen).
+        # Visor de archivos: el PDF o la imagen se muestra DENTRO de Nordeste (mismo origen).
         # Sin otras reglas de contenido: el visor de PDF del navegador las necesita, y el
         # archivo ya se validó al subirlo (solo PDF, PNG o JPG reales).
         response.headers["Cache-Control"] = "no-store"
@@ -187,8 +187,8 @@ else:
     @app.get("/", include_in_schema=False, response_class=HTMLResponse)
     def frontend_missing():
         return (
-            "<!doctype html><meta charset='utf-8'><title>Lumen</title>"
-            "<p>La API de Lumen está funcionando, pero falta compilar la interfaz.</p>"
+            "<!doctype html><meta charset='utf-8'><title>Nordeste</title>"
+            "<p>La API de Nordeste está funcionando, pero falta compilar la interfaz.</p>"
             "<p>En otra terminal, dentro de la carpeta <code>frontend</code>, ejecutá "
             "<code>npm install</code> y luego <code>npm run build</code>. "
             "Después detené el backend (Ctrl+C), volvé a iniciarlo y recargá esta página.</p>"

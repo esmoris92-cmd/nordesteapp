@@ -623,7 +623,7 @@ def reset_password(
     """Da una contraseña temporal a una cuenta que olvidó la suya.
 
     La contraseña se muestra UNA sola vez a administración (no se guarda en claro). La
-    persona deberá cambiarla al entrar; hasta entonces no puede usar el resto de Lumen.
+    persona deberá cambiarla al entrar; hasta entonces no puede usar el resto de Nordeste.
     Se cierran sus sesiones abiertas y se quita el bloqueo por intentos fallidos.
     """
     target = _get_clinic_user(db, user, user_id)

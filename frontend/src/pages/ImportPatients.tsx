@@ -75,7 +75,7 @@ export function ImportPatients({ source, onClose }: {
           </li>
           <li>
             Entran como pacientes <strong>AYEX</strong> activos{titular ? <> y vos quedás como responsable</> : " de la sucursal actual"}. Los que ya están en
-            Lumen (mismo documento) se saltean. Los horarios de las hojas LUN a SAB no se importan: los
+            Nordeste (mismo documento) se saltean. Los horarios de las hojas LUN a SAB no se importan: los
             turnos se cargan en la Agenda.
           </li>
           <li>
@@ -97,7 +97,7 @@ export function ImportPatients({ source, onClose }: {
           En Excel: <em>Archivo → Guardar como → CSV UTF-8</em>. Fechas como <code>14/03/2015</code>;
           sexo <code>M</code>, <code>F</code> o <code>X</code>; tipo de afiliación <code>Privado</code>,{" "}
           <code>AYEX</code>, <code>Tutela Militar</code> o <code>Tutela Policial</code>
-          {titular ? "." : "; responsable con su correo o nombre completo tal como figura en Lumen."}
+          {titular ? "." : "; responsable con su correo o nombre completo tal como figura en Nordeste."}
         </li>
         <li>Elegí el archivo y revisalo: no se guarda nada hasta que confirmes.</li>
       </ol>
@@ -125,7 +125,7 @@ export function ImportPatients({ source, onClose }: {
       {done && (
         <SuccessBox message={
           `Se importaron ${done.created} ${done.created === 1 ? "paciente" : "pacientes"}.` +
-          (done.skipped > 0 ? ` ${done.skipped} ya estaban en Lumen.` : "") +
+          (done.skipped > 0 ? ` ${done.skipped} ya estaban en Nordeste.` : "") +
           (done.invalid > 0 ? ` ${done.invalid} filas con errores no se cargaron.` : "")
         } />
       )}
@@ -134,7 +134,7 @@ export function ImportPatients({ source, onClose }: {
         <div className="import-preview">
           <p>
             <strong>{preview.total}</strong> filas: <Badge tone="ok">{preview.valid} correctas</Badge>{" "}
-            {preview.skipped > 0 && <Badge tone="neutral">{preview.skipped} ya en Lumen</Badge>}{" "}
+            {preview.skipped > 0 && <Badge tone="neutral">{preview.skipped} ya en Nordeste</Badge>}{" "}
             {preview.invalid > 0 && <Badge tone="danger">{preview.invalid} con errores</Badge>}
           </p>
           {preview.ignored_columns.length > 0 && (
@@ -185,7 +185,7 @@ export function ImportPatients({ source, onClose }: {
                       {r.status === "error" ? (
                         <ul className="row-errors">{r.errors.map((e) => <li key={e}>{e}</li>)}</ul>
                       ) : r.status === "skipped" ? (
-                        <span title={r.note ?? undefined}><Badge tone="neutral">Ya está en Lumen</Badge></span>
+                        <span title={r.note ?? undefined}><Badge tone="neutral">Ya está en Nordeste</Badge></span>
                       ) : <Badge tone="ok">Correcta</Badge>}
                     </td>
                   </tr>
@@ -195,7 +195,7 @@ export function ImportPatients({ source, onClose }: {
           </div>
           <div className="form-actions">
             {preview.valid === 0 && preview.skipped > 0 && preview.invalid === 0 && (
-              <span className="muted small">Todos los pacientes de la planilla ya están en Lumen.</span>
+              <span className="muted small">Todos los pacientes de la planilla ya están en Nordeste.</span>
             )}
             {preview.invalid > 0 && preview.valid > 0 && (
               <span className="muted small">Las filas con errores no se cargarán. Podés corregirlas

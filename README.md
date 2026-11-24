@@ -1,10 +1,14 @@
-# Lumen
+# Nordeste
 
-Sistema web de gestión clínica para clínicas y consultorios de **psicología**,
-**terapia ocupacional** y otras especialidades que cada clínica configure (p. ej. fonoaudiología).
+Sistema web de gestión clínica del **Centro Interdisciplinario Nordeste**, con tres
+sucursales: **Central**, **Anexo** y **Pando**. Los profesionales, recepción y administración
+entran desde el navegador.
 
-> ⚠️ **Estado: primera versión de desarrollo (0.1.0).** No está lista para datos reales.
-> Úsala solo con datos ficticios. Ver [docs/SEGURIDAD.md](docs/SEGURIDAD.md).
+El software es propiedad de la clínica. Partió de Lumen como base y es un proyecto separado:
+los cambios de uno no pasan al otro.
+
+> ⚠️ **Estado: primera versión (0.1.0).** Antes de cargar pacientes reales hay que completar
+> lo indicado en [docs/SEGURIDAD.md](docs/SEGURIDAD.md).
 
 ## Qué incluye esta versión
 
@@ -102,7 +106,7 @@ cd backend
 python3 -m venv .venv && source .venv/bin/activate
 python -m pip install -r requirements-dev.txt
 alembic upgrade head          # crea las tablas
-python -m app.seed            # carga datos ficticios
+python -m app.instalar_clinica # crea la clínica, las 3 sucursales y la primera cuenta de Administración
 uvicorn app.main:app --reload --no-access-log
 
 # 3) Interfaz (en otra Terminal)
@@ -116,34 +120,25 @@ npm run build
 `~/MedFlow-copias`; con `verificar` comprueba que se pueden restaurar
 ([docs/INSTALACION.md](docs/INSTALACION.md), sección 4 bis).
 
-**Dejar la base sin pacientes (para una demostración):** `bash scripts/vaciar-pacientes.sh`
+**Dejar la base sin pacientes (por ejemplo, después de probar con datos ficticios):** `bash scripts/vaciar-pacientes.sh`
 borra todos los pacientes y lo que depende de ellos (turnos, historia clínica, informes,
 archivos, auditoría) y conserva la clínica, las sucursales, los usuarios y sus horarios.
 Hace antes una copia de seguridad y pide escribir `BORRAR PACIENTES`. Solo en la base local.
 
-**Uso diario:** `bash scripts/iniciar.sh` arranca Lumen desde cualquier carpeta
+**Uso diario:** `bash scripts/iniciar.sh` arranca Nordeste desde cualquier carpeta
 (comprueba antes el entorno virtual, la interfaz compilada y que el puerto esté libre).
 
-## Cuentas de demostración (datos ficticios)
+## Primera cuenta
 
-Todas usan la contraseña definida en `DEMO_PASSWORD` de `backend/.env`. El valor de
-ejemplo es `MedFlow-Demo-2026`; es solo para tu base local y no debe reutilizarse en
-ningún otro lugar.
-
-| Correo | Rol | Qué ve |
-|---|---|---|
-| `admin@aurora.demo` | Administración | Todo lo administrativo de Clínica Aurora, los informes finalizados y la auditoría; sin historia clínica |
-| `recepcion@aurora.demo` | Recepción (Central) | Pacientes, agenda e informes finalizados de Aurora; sin historia clínica |
-| `recepcion.pando@aurora.demo` / `recepcion.anexo@aurora.demo` | Recepción (Pando / Anexo) | Solo en bases nuevas: las sucursales Pando y Anexo las crea el seed |
-| `lucia@aurora.demo` | Psicología | Sus 3 pacientes (responsable) |
-| `mateo@aurora.demo` | Terapia ocupacional | Su paciente, más Valentina como colaborador |
-| `sofia@aurora.demo` | Psicología | Solo a Elena |
-| `admin@boreal.demo` | Administración | Solo la clínica Boreal (para comprobar el aislamiento) |
-| `bruno@boreal.demo` | Psicología | Solo a su paciente de Boreal |
+`python -m app.instalar_clinica` (o el instalador del servidor, la primera vez) crea la
+cuenta de **Administración** con un correo provisorio
+(`administracion@nordeste.example.com`) y muestra una contraseña temporal una sola vez. Al
+entrar se pide una contraseña nueva. El correo se cambia desde *Usuarios* por el real de la
+clínica, y desde ahí se crean las cuentas de Recepción y de los profesionales.
 
 Qué probar y qué resultado esperar: **[docs/PRUEBAS.md](docs/PRUEBAS.md)**.
 
-Probarlo en un servidor en internet (DigitalOcean), con HTTPS y datos ficticios:
+Instalarlo en un servidor en internet (DigitalOcean), con HTTPS:
 **[docs/SERVIDOR.md](docs/SERVIDOR.md)**.
 
 ## Pruebas
@@ -174,7 +169,7 @@ scripts/          utilidades (verificar-entorno.sh)
 - Pruebas automáticas ejecutadas en la Mac M1 (macOS, Python 3.13, PostgreSQL 18):
   **140 aprobadas**. Falta ejecutarlas en la Mac Intel (Monterey).
 - **Zona horaria:** la agenda usa la hora de la computadora, que debe coincidir con la de
-  la clínica (`America/Montevideo` en la demo).
+  la clínica (`America/Montevideo`).
 - No hay recuperación de contraseña por correo ni segundo factor (2FA).
 - No hay paginación: los listados muestran hasta 500 pacientes y 300 eventos de auditoría.
 - Falta todo lo listado en “Qué falta antes de producción”

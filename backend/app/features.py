@@ -1,11 +1,11 @@
-"""Funciones de Lumen que el dueño del sistema puede habilitar o deshabilitar por clínica.
+"""Funciones de Nordeste que el dueño del sistema puede habilitar o deshabilitar por clínica.
 
 Lo básico (pacientes, agenda, usuarios, auditoría, historia clínica, informes) está siempre
 activo. Las funciones de esta lista se pueden apagar para una clínica que no las contrató:
 
 * En la base se guarda la lista de funciones **deshabilitadas** (``clinics.disabled_features``).
   Así las clínicas existentes y las nuevas empiezan con todo activado, y una función que se
-  agregue a Lumen en el futuro también empieza activada.
+  agregue a Nordeste en el futuro también empieza activada.
 * Deshabilitar **no borra nada**: la función desaparece del menú y la API la rechaza, pero sus
   datos quedan guardados. Al volver a habilitarla, todo sigue como estaba.
 """
@@ -43,7 +43,7 @@ FEATURES: tuple[Feature, ...] = (
 FEATURE_KEYS: tuple[str, ...] = tuple(f.key for f in FEATURES)
 
 FEATURE_DISABLED = ("Esta función no está habilitada para tu clínica. Si la necesitás, "
-                    "comunicate con el responsable de Lumen.")
+                    "comunicate con el responsable de Nordeste.")
 
 
 def enabled_features(disabled: list[str] | None) -> list[str]:
