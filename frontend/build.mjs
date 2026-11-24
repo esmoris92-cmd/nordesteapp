@@ -21,6 +21,8 @@ const options = {
   minify: !watch,
   sourcemap: watch,
   define: { "process.env.NODE_ENV": JSON.stringify(watch ? "development" : "production") },
+  // Las tipografías se sirven tal cual desde public/fonts.
+  external: ["/fonts/*"],
   logLevel: "info",
 };
 
