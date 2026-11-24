@@ -129,32 +129,10 @@ export function ToastHost() {
   );
 }
 
-/** Logo de Nordeste (la marca, sin el nombre). Dibujado en SVG para que se vea nítido en
- * cualquier tamaño; es una versión del logo original de la marca. */
+/** Logo del Centro Interdisciplinario Nordeste (la figura, sin el nombre).
+ * Imagen en public/logo-nordeste.png, recortada del logo original de la clínica. */
 export function Logo({ size = 34 }: { size?: number }) {
-  return (
-    <svg className="logo" viewBox="30 30 500 500" width={size} height={size} aria-hidden="true">
-      <defs>
-        <linearGradient id="lumen-g" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stopColor="#ABE6C8" /><stop offset="1" stopColor="#3FC4C4" />
-        </linearGradient>
-        <linearGradient id="lumen-b" x1="0" y1="1" x2="1" y2="0">
-          <stop offset="0" stopColor="#1B86F8" /><stop offset="1" stopColor="#96CFFC" />
-        </linearGradient>
-        <linearGradient id="lumen-s1" gradientUnits="userSpaceOnUse" x1="0" y1="165" x2="0" y2="235">
-          <stop offset="0" stopColor="#7ED2B0" /><stop offset="1" stopColor="#A8E0D8" />
-        </linearGradient>
-        <linearGradient id="lumen-s2" gradientUnits="userSpaceOnUse" x1="400" y1="258" x2="440" y2="222">
-          <stop offset="0" stopColor="#6DC0EA" /><stop offset="1" stopColor="#36B2CE" />
-        </linearGradient>
-      </defs>
-      <path fill="url(#lumen-g)" d="M40 100 C40 60 70 38 110 38 C200 40 258 100 258 180 L258 370 C258 445 200 500 130 500 C75 500 40 450 40 380 Z" />
-      <path fill="url(#lumen-b)" style={{ mixBlendMode: "multiply" }}
-            d="M260 312 L450 312 C500 312 525 350 515 390 C495 470 430 522 350 522 L190 522 C130 522 95 495 95 455 C95 380 160 312 260 312 Z" />
-      <line x1="347" y1="178" x2="347" y2="222" stroke="url(#lumen-s1)" strokeWidth="30" strokeLinecap="round" />
-      <line x1="402" y1="258" x2="440" y2="224" stroke="url(#lumen-s2)" strokeWidth="30" strokeLinecap="round" />
-    </svg>
-  );
+  return <img className="logo" src="/logo-nordeste.png" width={size} height={size} alt="" aria-hidden="true" />;
 }
 
 export function Empty({ children }: { children: ReactNode }) {
