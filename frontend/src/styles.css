@@ -1,15 +1,25 @@
 /* Estilos de Lumen: sobrios, legibles y adaptables a pantallas pequeñas. */
 :root,
 .print-page {
+  /* ===== Marca: Centro Interdisciplinario del Nordeste =====
+     Colores del logo: azul #0e4db7, rojo #f0182d, verde lima #b1de23, crema #fefedc.
+     Para cambiar la marca, editar solo este bloque y el equivalente del modo oscuro (más abajo). */
+  --brand: #0e4db7;
+  --brand-rgb: 14, 77, 183;   /* el mismo color en números, para transparencias */
+  --brand-hover: #0a3b8f;
+  --brand-ink: #ffffff;
+  --brand-soft: #e6eefb;
+  --accent-red: #f0182d;      /* solo decorativo: no usar para texto */
+  --accent-green: #b1de23;    /* solo decorativo: no usar para texto (poco contraste) */
+  --banner-from: #0a3b8f;     /* degradado de la cabecera de la ficha */
+  --banner-to: #0e4db7;
+
   /* Colores del modo claro (también se usan siempre en las hojas para imprimir) */
-  --bg: #f4f7fa;
+  --bg: #fafaf3;
   --surface: #ffffff;
   --ink: #142843;
   --muted: #52637a;
   --line: #dce4ec;
-  --brand: #1767c8;
-  --brand-ink: #ffffff;
-  --brand-soft: #e5f0fc;
   --danger: #b3261e;
   --danger-soft: #fbe9e7;
   --ok: #1e6b3a;
@@ -19,7 +29,7 @@
   --info: #1d4f7a;
   --info-soft: #e5eef8;
   --radius: 10px;
-  --focus: 0 0 0 3px rgba(23, 103, 200, 0.35);
+  --focus: 0 0 0 3px rgba(var(--brand-rgb), 0.35);
   --field-bg: #ffffff;
   --field-line: #b8c4d0;
   --subtle: #f8fafc;
@@ -29,8 +39,7 @@
   --warn-line: #f0dca0;
   --info-line: #c9d9ee;
   --faded-line: #c9d3dd;
-  --sched-soft: #e3effc;
-  --brand-hover: #12539f;
+  --sched-soft: #e6eefb;
   color-scheme: light;
 }
 :root {
@@ -288,7 +297,11 @@ th { color: var(--muted); font-weight: 600; font-size: 0.82rem; text-transform: 
 /* ---------- Ficha del paciente ---------- */
 .patient-banner {
   display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;
-  background: linear-gradient(120deg, #12539f, var(--brand) 55%, #0e7c86); color: #fff;
+  /* Degradado azul con una franja inferior con los tres colores del logo */
+  background:
+    linear-gradient(90deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, var(--banner-to) 66.6%) bottom / 100% 4px no-repeat,
+    linear-gradient(120deg, var(--banner-from), var(--banner-to));
+  color: #fff;
   border-radius: var(--radius) var(--radius) 0 0; padding: 1rem 1.25rem;
 }
 .patient-avatar {
@@ -429,7 +442,7 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
 .wg-line { position: absolute; left: 0; right: 0; border-top: 1px solid var(--neutral-soft); }
 .wg-available { position: absolute; left: 0; right: 0; background: var(--brand-soft); opacity: 0.7; }
 .wg-slot { position: absolute; left: 0; right: 0; border: none; background: transparent; cursor: pointer; padding: 0; }
-.wg-slot:hover, .wg-slot:focus-visible { background: rgba(23, 103, 200, 0.15); }
+.wg-slot:hover, .wg-slot:focus-visible { background: rgba(var(--brand-rgb), 0.15); }
 .wg-appt { position: absolute; z-index: 1; overflow: hidden; text-align: left; font: inherit; font-size: 0.75rem;
   line-height: 1.2; padding: 0.15rem 0.3rem; border-radius: 6px; border: 1px solid; cursor: pointer;
   white-space: normal; overflow-wrap: anywhere; }
@@ -701,6 +714,28 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
   .users-table td.row-actions { flex-wrap: wrap; gap: 0.4rem; padding-top: 0.5rem; }
 }
 
+/* ---------- Animaciones ----------
+   Suaves y cortas. Se desactivan si el equipo pide reducir el movimiento. */
+:root { --ease: cubic-bezier(0.2, 0.7, 0.3, 1); --t-fast: 150ms; --t-med: 220ms; }
+body { transition: background-color var(--t-med) ease, color var(--t-med) ease; }
+.btn, .link, .ptab, input, select, textarea {
+  transition: background-color var(--t-fast) ease, border-color var(--t-fast) ease, color var(--t-fast) ease,
+    box-shadow var(--t-fast) ease, transform var(--t-fast) var(--ease), filter var(--t-fast) ease;
+}
+.card { transition: background-color var(--t-med) ease, border-color var(--t-med) ease, box-shadow var(--t-med) ease; }
+.btn:not(:disabled):hover { transform: translateY(-1px); box-shadow: 0 3px 8px rgba(var(--brand-rgb), 0.14); }
+.btn-primary:not(:disabled):hover { box-shadow: 0 4px 12px rgba(var(--brand-rgb), 0.3); }
+.btn:not(:disabled):active { transform: translateY(0) scale(0.97); box-shadow: none; transition-duration: 60ms; }
+.ptab:active { transform: scale(0.97); }
+.modal-backdrop { animation: fade-in var(--t-med) ease-out; }
+.modal { animation: modal-in var(--t-med) var(--ease); }
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes modal-in { from { opacity: 0; transform: translateY(10px) scale(0.97); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .btn:not(:disabled):hover, .btn:not(:disabled):active, .ptab:active { transform: none; }
+}
+
 /* ---------- Modo oscuro ----------
    Se activa con el botón de la esquina inferior derecha (atributo data-theme="dark" en <html>).
    Solo en pantalla: al imprimir, y en las hojas para imprimir, siempre se usa el modo claro. */
@@ -711,10 +746,14 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
     --ink: #e4ebf3;
     --muted: #9fb0c3;
     --line: #2a3a4e;
-    --brand: #5aa0f0;
+    /* Marca en modo oscuro (tonos más claros del azul del logo) */
+    --brand: #6e9bea;
+    --brand-rgb: 110, 155, 234;
     --brand-ink: #0b1a2c;
-    --brand-soft: #1b3150;
-    --brand-hover: #7ab3f3;
+    --brand-soft: #172d52;
+    --brand-hover: #8fb2f0;
+    --accent-red: #ff6b78;
+    --accent-green: #c6ea5a;
     --danger: #ff8a80;
     --danger-soft: #3a1d1c;
     --danger-line: #6b3430;
@@ -732,8 +771,8 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
     --subtle: #1a2635;
     --neutral-soft: #24334a;
     --faded-line: #44566b;
-    --sched-soft: #1b3150;
-    --focus: 0 0 0 3px rgba(90, 160, 240, 0.45);
+    --sched-soft: #172d52;
+    --focus: 0 0 0 3px rgba(var(--brand-rgb), 0.45);
     color-scheme: dark;
   }
   :root[data-theme="dark"] .tone-blue { background: #1b3150; color: #8cbcf0; }
