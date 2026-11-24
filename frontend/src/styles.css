@@ -723,7 +723,7 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
   unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20C0, U+2C60-2C7F, U+A720-A7FF; }
 
 /* ======================================================================
-   Diseño Nordeste: barra lateral oscura, tarjetas redondeadas con brillo suave,
+   Diseño Nordeste: barra lateral color crema, tarjetas redondeadas con brillo suave,
    botones tipo píldora y tipografía Plus Jakarta Sans (alojada en public/fonts).
    ====================================================================== */
 :root {
@@ -731,13 +731,36 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
   --radius: 18px;
   --sidebar-w: 256px;
   --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --nav-from: #08122b;       /* barra lateral: azul noche */
-  --nav-to: #0b2259;
+  /* Barra lateral / superior: cambiar estos valores cambia todo el menú.
+     Paleta "Crema": el fondo crema del logo, texto azul, activo en azul y detalle rojo. */
+  --nav-from: #fefee6;
+  --nav-to: #f8f6d8;
+  --nav-ink: #2a3f63;
+  --nav-ink-strong: #0e3a8a;
+  --nav-muted: #6b7590;
+  --nav-hover: rgba(14, 77, 183, 0.08);
+  --nav-line: rgba(14, 58, 138, 0.12);
+  --nav-btn-bg: #ffffff;
+  --nav-btn-line: #d9d6bd;
+  --nav-chip-bg: #eef8cc;
+  --nav-chip-ink: #3d6b00;
+  --nav-chip-line: #cfe98a;
+  --nav-active-bg: #0e4db7;
+  --nav-active-ink: #ffffff;
+  --nav-indicator: var(--accent-red);
+  --nav-edge: #ebe9d6;
+  --stripe-blue: #0e4db7;
+  --primary-bg: linear-gradient(135deg, #1d63dc, #0e4db7);
+  --primary-bg-hover: linear-gradient(135deg, #2a70e8, #0f52c2);
+  --login-bg:
+    radial-gradient(700px 500px at 10% 0%, rgba(177, 222, 35, 0.28), transparent 60%),
+    radial-gradient(700px 500px at 100% 100%, rgba(240, 24, 45, 0.14), transparent 60%),
+    #fdfde8;
   --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 12px 28px -16px rgba(14, 40, 100, 0.18);
   --shadow-card-hover: 0 1px 2px rgba(16, 24, 40, 0.05), 0 22px 40px -18px rgba(14, 60, 150, 0.32);
-  --glow: 0 10px 26px -10px rgba(var(--brand-rgb), 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+  --glow: 0 8px 20px -10px rgba(var(--brand-rgb), 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
-:root, .print-page { --bg: #f4f6fb; --line: #e2e8f2; }
+:root, .print-page { --bg: #fbfbf4; --line: #ebe9d6; }
 body { -webkit-font-smoothing: antialiased; }
 h1, h2, .home-title, .stat-value { letter-spacing: -0.02em; }
 h1 { font-weight: 800; }
@@ -745,30 +768,30 @@ h2 { font-weight: 700; }
 
 /* ---------- Barra superior (celular y tablet) ---------- */
 .topbar {
-  position: relative; color: #fff; border-bottom: 0;
+  position: relative; color: var(--nav-ink-strong); border-bottom: 0;
   background: linear-gradient(110deg, var(--nav-from), var(--nav-to));
-  box-shadow: 0 6px 20px -8px rgba(8, 18, 43, 0.5);
+  box-shadow: 0 1px 0 var(--nav-edge);
 }
 .topbar::after {
   content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
-  background: linear-gradient(90deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, #3b7bf0 66.6%);
+  background: linear-gradient(90deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, var(--stripe-blue) 66.6%);
 }
-.topbar .logo { background: #fff; border-radius: 12px; padding: 3px; }
+.topbar .logo { background: #fff; border-radius: 12px; padding: 3px; box-shadow: 0 0 0 1px var(--nav-edge); }
 .brand strong { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
-.brand small, .whoami small { color: rgba(255, 255, 255, 0.62); }
-.topbar nav a { color: rgba(255, 255, 255, 0.78); position: relative; border-radius: 12px; font-weight: 500; }
-.topbar nav a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
+.brand small, .whoami small { color: var(--nav-muted); }
+.topbar nav a { color: var(--nav-ink); position: relative; border-radius: 12px; font-weight: 500; }
+.topbar nav a:hover { background: var(--nav-hover); color: var(--nav-ink-strong); }
 .topbar nav a[aria-current="page"] {
-  color: #fff; font-weight: 700;
-  background: linear-gradient(135deg, #2f6fe0, #0e4db7 60%, #0a3b8f); box-shadow: var(--glow);
+  color: var(--nav-active-ink); font-weight: 700;
+  background: var(--nav-active-bg); box-shadow: var(--glow);
 }
-.topbar .btn, .topbar .menu-toggle { color: #fff; background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.16); }
-.topbar .btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.14); box-shadow: none; }
+.topbar .btn, .topbar .menu-toggle { color: var(--nav-ink-strong); background: var(--nav-btn-bg); border-color: var(--nav-btn-line); }
+.topbar .btn:not(:disabled):hover { background: var(--nav-hover); box-shadow: none; }
 .topbar .branch-badge span, .topbar .branch-badge select {
-  color: #d9e6ff; background: rgba(110, 155, 234, 0.16); border-color: rgba(110, 155, 234, 0.35);
+  color: var(--nav-chip-ink); background: var(--nav-chip-bg); border-color: var(--nav-chip-line);
 }
 .topbar .branch-badge option { color: #142843; background: #fff; }
-.topbar :focus-visible { box-shadow: 0 0 0 3px rgba(198, 234, 90, 0.7); }
+.topbar :focus-visible { box-shadow: var(--focus); }
 
 /* ---------- Barra lateral (computadora) ---------- */
 @media (min-width: 1024px) {
@@ -778,22 +801,22 @@ h2 { font-weight: 700; }
     flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 1.25rem;
     padding: 1.4rem 0.9rem 1rem; overflow-y: auto;
     background: linear-gradient(180deg, var(--nav-from), var(--nav-to));
-    box-shadow: 8px 0 30px -18px rgba(8, 18, 43, 0.6);
+    box-shadow: 1px 0 0 var(--nav-edge);
   }
   .topbar::after {
     left: auto; right: 0; top: 0; bottom: 0; width: 3px; height: auto;
-    background: linear-gradient(180deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, #3b7bf0 66.6%);
+    background: linear-gradient(180deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, var(--stripe-blue) 66.6%);
   }
-  .brand { align-items: flex-start; padding: 0 0.35rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .brand { align-items: flex-start; padding: 0 0.35rem 1rem; border-bottom: 1px solid var(--nav-line); }
   .topbar nav { flex: 1; flex-direction: column; flex-wrap: nowrap; gap: 0.25rem; }
   .topbar nav a { padding: 0.65rem 0.9rem; }
   .topbar nav a[aria-current="page"]::before {
     content: ""; position: absolute; left: -0.9rem; top: 22%; bottom: 22%; width: 4px; border-radius: 0 4px 4px 0;
-    background: var(--accent-green);
+    background: var(--nav-indicator);
   }
   .whoami {
     flex-direction: column; align-items: stretch; text-align: left; gap: 0.6rem;
-    padding: 1rem 0.35rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 1rem 0.35rem 0; border-top: 1px solid var(--nav-line);
   }
   .whoami .btn { width: 100%; }
   .content { max-width: 1240px; padding: 2rem 2rem 4rem; }
@@ -826,9 +849,9 @@ th { font-size: 0.72rem; color: var(--muted); }
 .btn-small { padding: 0.25rem 0.7rem; }
 .btn-primary {
   border-color: transparent; color: #fff;
-  background: linear-gradient(135deg, #2f6fe0, #0e4db7 55%, #0a3b8f); box-shadow: var(--glow);
+  background: var(--primary-bg); box-shadow: var(--glow);
 }
-.btn-primary:hover { background: linear-gradient(135deg, #3c7cf0, #1257cc 55%, #0c44a3); }
+.btn-primary:hover { background: var(--primary-bg-hover); }
 /* Destello que cruza el botón principal al pasar el mouse. */
 .btn-primary::after {
   content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; pointer-events: none;
@@ -857,12 +880,7 @@ input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 4px rgba(var(--bra
 .empty { border-radius: 14px; border: 1px dashed var(--line); }
 
 /* ---------- Ingreso ---------- */
-.login {
-  background:
-    radial-gradient(900px 500px at 15% -10%, rgba(59, 123, 240, 0.35), transparent 60%),
-    radial-gradient(700px 400px at 110% 110%, rgba(177, 222, 35, 0.18), transparent 60%),
-    linear-gradient(160deg, var(--nav-from), var(--nav-to));
-}
+.login { background: var(--login-bg); }
 .login-card { box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.6); }
 .modal { border-radius: 20px; }
 .theme-toggle { box-shadow: var(--shadow-card-hover); }
@@ -993,17 +1011,20 @@ p.muted[role="status"] { animation: pulse 1.1s ease-in-out infinite; }
   :root[data-theme="dark"] .picker-results { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45); }
   /* Diseño Nordeste en modo oscuro: fondo azul noche y tarjetas tipo vidrio con brillo azul. */
   :root[data-theme="dark"] {
-    --bg: #060b17; --surface: #0d1527; --line: #1c2843; --subtle: #0f1a30; --field-bg: #0f1a30; --field-line: #2a3a5c;
-    --nav-from: #040814; --nav-to: #0a1838;
-    --shadow-card: 0 0 0 1px rgba(110, 155, 234, 0.06), 0 24px 50px -30px rgba(14, 77, 183, 0.55);
-    --shadow-card-hover: 0 0 0 1px rgba(110, 155, 234, 0.16), 0 30px 60px -28px rgba(14, 77, 183, 0.75);
+    --bg: #121311; --surface: #1a1c19; --line: #2b2e28; --subtle: #1f221e; --field-bg: #1f221e; --field-line: #3a3e36;
+    --nav-from: #191b17; --nav-to: #1d201a; --nav-ink: #c9cfbf; --nav-ink-strong: #f2f4ea; --nav-muted: #9aa290;
+    --nav-hover: rgba(198, 234, 90, 0.08); --nav-line: rgba(255, 255, 255, 0.08); --nav-btn-bg: rgba(255, 255, 255, 0.04);
+    --nav-btn-line: rgba(255, 255, 255, 0.14); --nav-chip-bg: rgba(198, 234, 90, 0.14); --nav-chip-ink: #d8f08a;
+    --nav-chip-line: rgba(198, 234, 90, 0.35); --nav-active-bg: #1d63dc; --nav-active-ink: #fff; --nav-edge: #2b2e28;
+    --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 20px 40px -28px rgba(0, 0, 0, 0.8);
+    --shadow-card-hover: 0 1px 0 rgba(255, 255, 255, 0.05) inset, 0 26px 50px -26px rgba(0, 0, 0, 0.9);
   }
   :root[data-theme="dark"] body {
-    background: radial-gradient(1000px 600px at 80% -10%, rgba(14, 77, 183, 0.22), transparent 60%), var(--bg) fixed;
+    background: radial-gradient(900px 500px at 90% -10%, rgba(177, 222, 35, 0.07), transparent 60%), var(--bg) fixed;
   }
   :root[data-theme="dark"] .card {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)), var(--surface);
-    border-color: rgba(110, 155, 234, 0.16);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.008)), var(--surface);
+    border-color: var(--line);
   }
   :root[data-theme="dark"] .tab.active, :root[data-theme="dark"] .ptab.active { color: #fff; background: #1a5fd6; }
 }
