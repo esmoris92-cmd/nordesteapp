@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# Borra TODOS los pacientes de la base LOCAL (y lo que depende de ellos) para dejar Lumen
+# Borra TODOS los pacientes de la base LOCAL (y lo que depende de ellos) para dejar Nordeste
 # limpio antes de mostrarlo. Conserva la clínica, las sucursales, los usuarios y sus horarios.
 #   bash scripts/vaciar-pacientes.sh
 # Hace antes una copia de seguridad en ~/MedFlow-copias y pide escribir BORRAR PACIENTES.
-# Lumen tiene que estar detenido (Control + C en su Terminal).
+# Nordeste tiene que estar detenido (Control + C en su Terminal).
 set -euo pipefail
 cd "$(dirname "$0")/../backend"
 

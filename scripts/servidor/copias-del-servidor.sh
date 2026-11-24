@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # Copias de seguridad del SERVIDOR guardadas en esta Mac (fuera del servidor).
-# Si la VPS se borra o se rompe, con estas copias se puede volver a armar Lumen.
+# Si la VPS se borra o se rompe, con estas copias se puede volver a armar Nordeste.
 #
 #   bash scripts/servidor/copias-del-servidor.sh preparar          una sola vez: llave y permiso en el servidor
 #   bash scripts/servidor/copias-del-servidor.sh bajar             baja ahora la copia más reciente
@@ -9,18 +9,27 @@
 #   bash scripts/servidor/copias-del-servidor.sh verificar [ARCH]  prueba restaurar una copia en la base de pruebas
 #   bash scripts/servidor/copias-del-servidor.sh desinstalar       deja de bajarlas solo (no borra ninguna copia)
 #
-# Las copias quedan en ~/Lumen-copias-servidor (se conservan las 30 más recientes). Tienen
+# Las copias quedan en ~/Nordeste-copias-servidor (se conservan las 30 más recientes). Tienen
 # datos de pacientes: la Mac tiene que tener FileVault activado (disco cifrado).
 set -euo pipefail
 
-SERVIDOR="${LUMEN_SERVIDOR:-190.64.205.231}"
-PUERTO="${LUMEN_PUERTO:-2200}"
-ADMIN="${LUMEN_ADMIN:-srv920}"           # tu usuario con sudo (solo para "preparar")
+DESTINO_CONF="$(cd "$(dirname "$0")" && pwd)/destino.env"
+# shellcheck disable=SC1090
+[ -f "$DESTINO_CONF" ] && . "$DESTINO_CONF"
+falta_destino() {
+  echo "❌ Falta el servidor de Nordeste: copiá scripts/servidor/destino.env.example como"
+  echo "   scripts/servidor/destino.env y completalo (o pasá las variables NORDESTE_*)."
+  exit 1
+}
+[ -n "${NORDESTE_SERVIDOR:-}" ] && [ -n "${NORDESTE_USUARIO:-}" ] || falta_destino
+SERVIDOR="$NORDESTE_SERVIDOR"
+PUERTO="${NORDESTE_PUERTO:-22}"
+ADMIN="$NORDESTE_USUARIO"               # tu usuario con sudo (solo para "preparar")
 CUENTA="lumencopia"                       # la cuenta que solo puede bajar copias
-LLAVE="$HOME/.ssh/lumen_copias"
-CARPETA="${LUMEN_COPIAS_MAC:-$HOME/Lumen-copias-servidor}"
+LLAVE="$HOME/.ssh/nordeste_copias"
+CARPETA="${NORDESTE_COPIAS_MAC:-$HOME/Nordeste-copias-servidor}"
 CONSERVAR=30
-LABEL="uy.lumengestion.copias-del-servidor"
+LABEL="uy.nordeste.copias-del-servidor"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 REGISTRO="$CARPETA/registro.log"
 PROYECTO="$(cd "$(dirname "$0")/../.." && pwd)"

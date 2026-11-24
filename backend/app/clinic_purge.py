@@ -1,4 +1,4 @@
-"""Borrar TODOS los datos de una clínica (o espacio independiente) que dejó de usar Lumen.
+"""Borrar TODOS los datos de una clínica (o espacio independiente) que dejó de usar Nordeste.
 
 Lo hace solo el dueño del sistema, desde /sistema (``routers/owner_lifecycle.py``), con varios
 candados que se controlan allá (clínica suspendida hace al menos 30 días, exportación entregada

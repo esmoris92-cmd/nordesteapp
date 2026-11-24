@@ -174,7 +174,7 @@ def test_finds_every_kind_of_problem(world, login, db):
     }
     by_kind = {i["kind"]: i for i in out["issues"] if i["kind"] != "not_in_bps"}
     assert by_kind["underpaid"]["difference"] == -1030
-    assert by_kind["underpaid"]["name"] == "Bruno Inventado"  # el nombre de Lumen
+    assert by_kind["underpaid"]["name"] == "Bruno Inventado"  # el nombre de Nordeste
     assert by_kind["underpaid"]["patient_id"] == str(under.id)
     assert by_kind["underpaid"]["branch_name"] == "Central"
     assert by_kind["duplicate"]["patient_id"] == str(ok.id)

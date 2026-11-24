@@ -10,7 +10,7 @@ import "./styles.css";
 
 applySavedTheme();
 
-// lumengestion.uy/sistema: la pantalla del dueño del sistema (sesión aparte de las clínicas).
+// <dominio>/sistema: la pantalla del dueño del sistema (sesión aparte de las clínicas).
 const isOwnerArea = window.location.pathname.replace(/\/+$/, "") === "/sistema";
 
 const root = document.getElementById("root");

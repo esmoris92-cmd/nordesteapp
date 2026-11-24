@@ -1,5 +1,5 @@
 // Pagos BPS: Administración o Recepción sube el PDF "Detalle de Item Facturable" que manda el BPS cada
-// mes y Lumen muestra solo lo que hay que revisar (pagos distintos al arancel AYEX,
+// mes y Nordeste muestra solo lo que hay que revisar (pagos distintos al arancel AYEX,
 // pacientes que no figuran, documentos que no son pacientes y repetidos). El PDF no se guarda.
 import { useRef, useState, type FormEvent, type ReactNode } from "react";
 import { api, uploadAndDownload, uploadFile } from "../api";
@@ -77,10 +77,10 @@ export function BpsPaymentsPage() {
             ni un escaneo).
           </li>
           <li>
-            Lumen compara cada fila con el arancel AYEX de la clínica y con los pacientes AYEX activos de todas las
+            Nordeste compara cada fila con el arancel AYEX de la clínica y con los pacientes AYEX activos de todas las
             sucursales, y muestra <strong>solo lo que hay que revisar</strong>.
           </li>
-          <li>Descargá el Excel para reclamar al BPS. El PDF no se guarda en Lumen.</li>
+          <li>Descargá el Excel para reclamar al BPS. El PDF no se guarda en Nordeste.</li>
         </ol>
 
         {clinic.loading && !clinic.data && <Loading />}

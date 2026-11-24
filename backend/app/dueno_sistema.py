@@ -96,7 +96,7 @@ def listar() -> None:
 
 def main(argv: list[str] | None = None) -> None:
     parser = argparse.ArgumentParser(prog="python -m app.dueno_sistema",
-                                     description="Cuenta del dueño del sistema de Lumen.")
+                                     description="Cuenta del dueño del sistema de Nordeste.")
     sub = parser.add_subparsers(dest="command", required=True)
     p_crear = sub.add_parser("crear", help="crea la cuenta y muestra una contraseña temporal")
     p_crear.add_argument("--correo", required=True)

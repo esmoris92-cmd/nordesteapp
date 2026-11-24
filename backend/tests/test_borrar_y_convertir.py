@@ -1,4 +1,4 @@
-"""Desde /sistema: borrar todos los datos de una clínica que dejó Lumen (con sus candados) y
+"""Desde /sistema: borrar todos los datos de una clínica que dejó Nordeste (con sus candados) y
 convertir un espacio independiente en clínica. Datos ficticios."""
 
 from datetime import timedelta

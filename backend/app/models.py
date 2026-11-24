@@ -279,7 +279,7 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
     failed_login_count: Mapped[int] = mapped_column(Integer, nullable=False, default=0)
     locked_until: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
-    # True tras un restablecimiento: debe elegir una contraseña nueva antes de usar Lumen.
+    # True tras un restablecimiento: debe elegir una contraseña nueva antes de usar Nordeste.
     must_change_password: Mapped[bool] = mapped_column(Boolean, nullable=False, default=False,
                                                        server_default=text("false"))
     # Cuántos pacientes puede atender a la vez (turnos superpuestos). Solo aplica a profesionales.
@@ -765,7 +765,7 @@ class GoalUpdate(Base):
 
 
 class ProfessionalDegree(Base):
-    """Foto o PDF del título universitario de un profesional (obligatorio: hasta subirlo, Lumen
+    """Foto o PDF del título universitario de un profesional (obligatorio: hasta subirlo, Nordeste
     muestra un aviso). Lo ven el propio profesional y Administración.
 
     Como los archivos de pacientes: se guarda en disco con un nombre aleatorio. Al subir uno
@@ -834,7 +834,7 @@ class NoticeRecipient(Base):
 
 class CashRegister(Base):
     """Caja diaria de una sucursal (una por día). Se abre con el efectivo contado al empezar
-    y se cierra con el efectivo contado al terminar; Lumen calcula lo esperado (inicial +
+    y se cierra con el efectivo contado al terminar; Nordeste calcula lo esperado (inicial +
     entradas - salidas) y guarda la diferencia. Cerrada, solo Administración puede reabrirla.
     No se borra."""
 
@@ -902,7 +902,7 @@ class CashMovement(Base):
 
 
 class SystemOwner(Base):
-    """Quien administra Lumen como servicio: da de alta y suspende clínicas."""
+    """Quien administra Nordeste como servicio: da de alta y suspende clínicas."""
 
     __tablename__ = "system_owners"
     __table_args__ = (

@@ -1,5 +1,5 @@
 """Formulario del BPS "Solicitud de liquidación – Ayuda Extraordinaria" (AYEX), completado con
-los datos que Lumen ya tiene del paciente.
+los datos que Nordeste ya tiene del paciente.
 
 Se usa el PDF original del BPS (``app/forms/solicitud_ayex_bps.pdf``, con sus campos
 rellenables): se completan los campos conocidos y el resto queda en blanco y EDITABLE, para

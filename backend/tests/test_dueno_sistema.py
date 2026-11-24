@@ -56,7 +56,7 @@ def _ready_owner(db, capsys) -> tuple[OwnerClient, str]:
     assert owner.get("/api/owner/clinics").status_code == 403  # falta el código
     start = owner.post("/api/owner/auth/totp/start").json()
     secret = start["secret"].replace(" ", "")
-    assert start["uri"].startswith("otpauth://totp/Lumen:") and secret in start["uri"]
+    assert start["uri"].startswith("otpauth://totp/Nordeste:") and secret in start["uri"]
     bad = owner.post("/api/owner/auth/totp/confirm", {"code": "000000" if totp.code_at(secret, totp.current_step()) != "000000" else "111111"})
     assert bad.status_code == 422
     r = owner.post("/api/owner/auth/totp/confirm", {"code": totp.code_at(secret, totp.current_step())})
@@ -157,7 +157,7 @@ def test_create_clinic_with_its_first_admin(world, db, capsys):
                        json={"current_password": temp, "new_password": "una-clave-del-admin-1"}).status_code == 204
     events = client.get("/api/audit").json()
     created = [e for e in events if e["action"] == "system.clinic_create"]
-    assert created and created[0]["actor_name"] == "Soporte de Lumen"
+    assert created and created[0]["actor_name"] == "Soporte de Nordeste"
 
     assert owner.post("/api/owner/clinics", {**body, "admin_email": "otro@ejemplo.test"}).status_code == 409
     assert owner.post("/api/owner/clinics", {**body, "name": "Otra", "admin_email": "admin@a.test"}).status_code == 409

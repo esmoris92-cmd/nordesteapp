@@ -1,4 +1,4 @@
-"""Configuración de Lumen.
+"""Configuración de Nordeste.
 
 Los valores se leen de variables de entorno o del archivo ``backend/.env``.
 Nunca escribas contraseñas ni claves directamente en el código.
@@ -28,8 +28,6 @@ class Settings(BaseSettings):
 
     login_max_failures: int = 5
     login_lock_minutes: int = 15
-
-    demo_password: str | None = None
 
     # Carpeta donde se guardan los archivos adjuntos (fuera de la carpeta pública).
     files_dir: str = str(BACKEND_DIR / "storage" / "files")

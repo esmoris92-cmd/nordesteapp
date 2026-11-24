@@ -1,6 +1,6 @@
 """Título universitario de los profesionales (foto JPG/PNG o PDF, obligatorio).
 
-* Cada profesional sube el suyo desde "Mi cuenta". Hasta que lo sube, Lumen le muestra un
+* Cada profesional sube el suyo desde "Mi cuenta". Hasta que lo sube, Nordeste le muestra un
   aviso en todas las pantallas (puede seguir trabajando).
 * Lo ven el propio profesional y Administración; nadie más.
 * Al subir uno nuevo, el anterior queda guardado como "reemplazado" (no se borra).
@@ -140,7 +140,7 @@ def download_degree(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Descarga (o, con ``view=true``, muestra dentro de Lumen) un título. Solo Administración o
+    """Descarga (o, con ``view=true``, muestra dentro de Nordeste) un título. Solo Administración o
     su dueño; cualquier otra persona recibe 404 (no se revela que existe)."""
     d = db.scalar(select(ProfessionalDegree).where(ProfessionalDegree.id == degree_id,
                                                    ProfessionalDegree.clinic_id == user.clinic_id))

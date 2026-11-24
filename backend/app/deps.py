@@ -78,7 +78,7 @@ class CurrentUser:
 
 
 CLINIC_SUSPENDED = ("El acceso a esta clínica está suspendido. Comunicate con el responsable de "
-                    "Lumen para reactivarlo.")
+                    "Nordeste para reactivarlo.")
 
 _NOT_AUTHENTICATED = HTTPException(
     status_code=status.HTTP_401_UNAUTHORIZED,

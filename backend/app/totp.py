@@ -17,7 +17,7 @@ from urllib.parse import quote
 
 STEP_SECONDS = 30
 DIGITS = 6
-ISSUER = "Lumen"
+ISSUER = "Nordeste"
 
 
 def new_secret() -> str:

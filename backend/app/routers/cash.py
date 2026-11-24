@@ -4,7 +4,7 @@
   Administración con el efectivo que hay al empezar el día.
 * Mientras está abierta se cargan entradas y salidas de efectivo, con un concepto. Un
   movimiento equivocado no se borra: se anula (con el motivo) y deja de contar.
-* Al cerrar se ingresa el efectivo contado. Lumen calcula lo esperado
+* Al cerrar se ingresa el efectivo contado. Nordeste calcula lo esperado
   (inicial + entradas - salidas) y guarda la diferencia (sobrante o faltante). Si hay
   diferencia, hay que explicar el motivo.
 * No se puede abrir la caja de hoy si quedó abierta la de un día anterior: primero se cierra.

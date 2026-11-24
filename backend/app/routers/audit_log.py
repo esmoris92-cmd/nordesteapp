@@ -60,7 +60,7 @@ def list_audit(
     return [
         AuditOut(
             id=e.id, created_at=e.created_at, action=e.action,
-            actor_name=name or ("Soporte de Lumen" if e.action.startswith("system.") else None),
+            actor_name=name or ("Soporte de Nordeste" if e.action.startswith("system.") else None),
             entity_type=e.entity_type, entity_id=e.entity_id, patient_id=e.patient_id,
             patient_name=f"{last}, {first}" if last else None, details=e.details,
         )

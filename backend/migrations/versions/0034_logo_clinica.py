@@ -1,4 +1,4 @@
-"""Logo de la clínica (PNG o JPG): sale en el encabezado de lo que se imprime desde Lumen.
+"""Logo de la clínica (PNG o JPG): sale en el encabezado de lo que se imprime desde Nordeste.
 
 Revision ID: 0034_logo_clinica
 Revises: 0033_cierre_informe

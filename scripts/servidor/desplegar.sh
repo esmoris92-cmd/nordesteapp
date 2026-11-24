@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
-# Envía Lumen desde esta Mac a un servidor (por ejemplo, un Droplet de DigitalOcean con
+# Envía Nordeste desde esta Mac a un servidor (por ejemplo, un Droplet de DigitalOcean con
 # Ubuntu 24.04) y lo instala con HTTPS.
 #
-#   bash scripts/servidor/desplegar.sh <IP-del-servidor> [nombre-del-sitio] [--demo]
+#   bash scripts/servidor/desplegar.sh <IP-del-servidor> [nombre-del-sitio]
 #
 # Ejemplos:
-#   bash scripts/servidor/desplegar.sh 164.90.123.45 --demo
-#       → https://164-90-123-45.sslip.io con datos de demostración ficticios
-#   bash scripts/servidor/desplegar.sh 164.90.123.45 medflow.tuclinica.com.uy
+#   bash scripts/servidor/desplegar.sh 164.90.123.45
+#       → https://164-90-123-45.sslip.io (para probar antes de tener dominio)
+#   bash scripts/servidor/desplegar.sh 164.90.123.45 app.nordeste.com.uy
 #       → con el dominio de la clínica (el dominio ya debe apuntar a esa IP)
 #
 # Usa SSH con la llave de esta Mac (ver docs/SERVIDOR.md). Envía solo lo que está guardado
@@ -16,15 +16,9 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 
 IP="${1:-}"; shift || true
-SITE=""; DEMO=""
-for arg in "$@"; do
-  case "$arg" in
-    --demo) DEMO="--demo" ;;
-    *) SITE="$arg" ;;
-  esac
-done
+SITE="${1:-}"
 if ! [[ "$IP" =~ ^[0-9]{1,3}(\.[0-9]{1,3}){3}$ ]]; then
-  echo "Uso: bash scripts/servidor/desplegar.sh <IP-del-servidor> [nombre-del-sitio] [--demo]"
+  echo "Uso: bash scripts/servidor/desplegar.sh <IP-del-servidor> [nombre-del-sitio]"
   echo "     La IP figura en el panel de DigitalOcean, junto al nombre del Droplet."
   exit 1
 fi
@@ -49,4 +43,4 @@ echo "▶️  Enviando al servidor $IP (si pregunta \"Are you sure you want to c
 scp -q "$TMP/medflow.tar.gz" scripts/servidor/instalar.sh "root@$IP:/root/"
 
 echo "▶️  Instalando en el servidor…"
-ssh -t "root@$IP" "bash /root/instalar.sh /root/medflow.tar.gz '$SITE' $DEMO && rm -f /root/medflow.tar.gz"
+ssh -t "root@$IP" "bash /root/instalar.sh /root/medflow.tar.gz '$SITE' && rm -f /root/medflow.tar.gz"

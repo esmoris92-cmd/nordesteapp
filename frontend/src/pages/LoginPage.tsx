@@ -27,9 +27,9 @@ export function LoginPage({ notice, onLogin }: Props) {
     <main className="login">
       <form className="card login-card" onSubmit={submit} noValidate={false}>
         <h1>
-          <Logo /> Lumen
+          <Logo /> Nordeste
         </h1>
-        <p className="muted">Gestión clínica para centros de salud.</p>
+        <p className="muted">Centro Interdisciplinario Nordeste</p>
         {notice?.tone === "ok" ? <SuccessBox message={notice.text} /> : <WarnBox message={notice?.text} />}
         <ErrorBox message={error} />
         <Field label="Correo electrónico" required>
@@ -60,7 +60,7 @@ export function LoginPage({ notice, onLogin }: Props) {
           {busy ? "Ingresando…" : "Ingresar"}
         </button>
         <p className="muted small">
-          Las cuentas de demostración (ficticias) están en el archivo README del proyecto.
+          ¿Olvidaste tu contraseña? Pedile a Administración que la restablezca.
         </p>
       </form>
     </main>

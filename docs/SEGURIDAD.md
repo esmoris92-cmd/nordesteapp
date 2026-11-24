@@ -1,9 +1,9 @@
 # Seguridad y privacidad: decisiones de diseño
 
-Lumen manejará datos de salud. Este documento explica qué protecciones tiene la
+Nordeste manejará datos de salud. Este documento explica qué protecciones tiene la
 versión actual, cómo se comprueban y qué **falta** antes de usarla con datos reales.
 
-> Lumen **no** está evaluado ni certificado frente a ninguna normativa de protección de
+> Nordeste **no** está evaluado ni certificado frente a ninguna normativa de protección de
 > datos o de historia clínica. Antes de usar datos reales hace falta una evaluación
 > especializada (legal y de seguridad).
 
@@ -142,7 +142,7 @@ como tercera capa, y ejecutar las tareas de fondo (hoy no hay) siempre filtradas
 ## 4 bis. Restablecer contraseña
 
 * Solo Administración, y no para su propia cuenta (esa se cambia en "Mi cuenta").
-* Lumen genera una contraseña temporal aleatoria que se muestra **una sola vez**; solo se
+* Nordeste genera una contraseña temporal aleatoria que se muestra **una sola vez**; solo se
   guarda su hash. Se cierran las sesiones abiertas de esa persona y se quita el bloqueo por
   intentos fallidos.
 * Con la temporal, la cuenta solo puede cambiar su contraseña (o salir): el servidor rechaza
@@ -173,9 +173,9 @@ como tercera capa, y ejecutar las tareas de fondo (hoy no hay) siempre filtradas
   excluida de Git), fuera de la carpeta pública de la web.
 * La descarga se entrega siempre como adjunto, con `nosniff`, para que el navegador no la
   ejecute como página. Cada descarga queda auditada, sin copiar el nombre del archivo.
-* **Ver** (visor dentro de Lumen): el mismo archivo se entrega "en línea" para mostrarlo en
+* **Ver** (visor dentro de Nordeste): el mismo archivo se entrega "en línea" para mostrarlo en
   una ventana, sin guardarlo en Descargas. Solo esa respuesta permite mostrarse dentro de
-  Lumen (`frame-ancestors 'self'`, `X-Frame-Options: SAMEORIGIN`) y no lleva otras reglas
+  Nordeste (`frame-ancestors 'self'`, `X-Frame-Options: SAMEORIGIN`) y no lleva otras reglas
   de contenido, porque el visor de PDF del navegador las necesita; ninguna otra página puede
   incrustarla. Cada vez que se abre queda auditado como "file.view".
 * No se borran: se **retiran** con motivo (lo impide también un *trigger* de la base).
@@ -184,7 +184,7 @@ como tercera capa, y ejecutar las tareas de fondo (hoy no hay) siempre filtradas
 
 ## 5 ter. Importación de pacientes (CSV)
 
-* Solo Administración y Recepción. El archivo va directo del navegador a Lumen: **no se
+* Solo Administración y Recepción. El archivo va directo del navegador a Nordeste: **no se
   guarda** en disco ni en la base, solo se crean los pacientes válidos.
 * La vista previa no escribe nada; al confirmar, el servidor vuelve a revisar todo.
 * Cada alta queda auditada como "patient.import", sin copiar nombres ni documentos.

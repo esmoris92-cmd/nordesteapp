@@ -277,7 +277,7 @@ class UserCreateIn(BaseModel):
     role: Role
     specialty_id: uuid.UUID | None = None
     max_concurrent_patients: Annotated[int, Field(ge=1, le=10)] = 3
-    # Sin contraseña: Lumen genera una temporal que la persona cambia al entrar por primera vez.
+    # Sin contraseña: Nordeste genera una temporal que la persona cambia al entrar por primera vez.
     branch_ids: list[uuid.UUID] = Field(default_factory=list, max_length=50)
 
     @model_validator(mode="after")

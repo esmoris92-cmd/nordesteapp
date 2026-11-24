@@ -36,17 +36,16 @@ también revierten y vuelven a aplicar la migración, lo que comprueba que es re
 | `test_patient_profile.py` | Ficha: documento único por clínica y en mayúsculas, segundo nombre/apellido, sexo, tipo de afiliación obligatorio y filtro por afiliación, búsqueda por documento |
 | `test_guardians.py` | Responsables: quién puede verlos y editarlos, un solo contacto principal, auditoría |
 | `test_note_kinds.py` | Anamnesis, entrevista y evaluación: se guardan como registros clínicos inalterables |
-| `test_files.py` | Archivos: solo PDF/PNG/JPG reales, límite de tamaño, sin acceso para administración/recepción, descarga segura, visor dentro de Lumen (auditado y que no se puede incrustar en otros sitios), retiro con motivo |
+| `test_files.py` | Archivos: solo PDF/PNG/JPG reales, límite de tamaño, sin acceso para administración/recepción, descarga segura, visor dentro de Nordeste (auditado y que no se puede incrustar en otros sitios), retiro con motivo |
 | `test_branches.py` | Sucursales: entra directo si tiene una, elige si tiene varias, el servidor rechaza sucursales no permitidas, cambio de permisos en el momento, administración de sucursales, cuentas sin sucursal |
 | `test_patient_branches.py` | Pacientes por sucursal: recepción ve su sucursal y los privados de todas, no puede crear en una sucursal ajena, el filtro por sucursal, el listado de a páginas con el total y la sucursal en la importación |
 | `test_agenda_branches.py` | Agenda por sucursal: horarios solo donde trabaja el profesional y nunca a la misma hora en dos sucursales, turnos en la sucursal activa, AYEX, Tutela Militar y Tutela Policial solo en su sucursal, recepción solo gestiona su sucursal, no se puede quitar una sucursal con turnos pendientes, vista diaria con los horarios de todos los profesionales de la sucursal |
 | `test_collaborators.py` | Varios profesionales con un paciente: el colaborador recibe turnos, recepción ve responsable y colaboradores (listado y ficha) pero no puede agregarlos, y el error al dar turno explica qué hacer |
 | `test_afiliaciones.py` | Tipos de afiliación Privado, AYEX, Tutela Militar y Tutela Policial: alta, importación (con variantes como "policial"), filtro, y que los no privados se atienden solo en su sucursal |
 | `test_compression.py` | Compresión gzip de la interfaz y los datos (carga más rápida por internet), salvo el inicio de sesión, que lleva el token CSRF |
-| `test_demo_check.py` | Antes de abrir Lumen por internet: detecta las cuentas que todavía usan la contraseña de demostración |
 | `test_reports_branches.py` | Inicio e informe mensual por sucursal: administración ve la activa, otra o todas; recepción solo la suya; cada profesional lo suyo en todas sus sucursales; Excel con columna y totales por sucursal |
 | `test_goals.py` | Plan de tratamiento: solo profesionales con acceso (responsable y colaboradores), avances y estados, reabrir, validaciones, la base impide reescribir o borrar, auditoría sin textos |
-| `test_password_reset.py` | Restablecer contraseña: temporal mostrada una vez, sesiones cerradas, obligación de cambiarla antes de usar Lumen, desbloqueo, solo administración, nunca en la auditoría |
+| `test_password_reset.py` | Restablecer contraseña: temporal mostrada una vez, sesiones cerradas, obligación de cambiarla antes de usar Nordeste, desbloqueo, solo administración, nunca en la auditoría |
 | `test_monthly_summary.py` | Informe mensual: conteos por estado y afiliación, pacientes atendidos, límites del mes en hora de la clínica, profesional ve solo lo suyo, exportación sin nombres de pacientes |
 | `test_patient_export.py` | Exportación a Excel: solo administración y recepción, respeta filtros, nunca muestra otra clínica, el texto nunca se ejecuta como fórmula, queda auditada |
 | `test_patient_import.py` | Importación CSV: la vista previa no guarda, errores por fila (fecha, sexo, documento repetido, responsable inexistente), el mismo documento escrito con o sin puntos, descarga de las filas con errores, solo administración y recepción, codificación de Excel |
@@ -68,46 +67,14 @@ npm run build       # debe terminar con "Interfaz compilada"
 
 ## Recorrido manual sugerido
 
-Todas las cuentas usan la contraseña definida en `DEMO_PASSWORD` de `backend/.env`.
+Esta versión no trae datos de demostración. Para probar a mano, en una base local:
 
-1. **Recepción** (`recepcion@aurora.demo`)
-   - Ves los 5 pacientes ficticios de la Clínica Aurora y ningún paciente de Boreal.
-   - Abre “Valentina Ejemplo”: no aparece “Historia clínica”. En “Informes” ves solo los
-     informes **finalizados**, sin botón para crear o editar. (El informe de ejemplo es un
-     borrador: aparecerá cuando Lucía lo finalice.)
-   - En **Agenda**, elige “Lic. Lucía Ficticia” y da un turno a Valentina un día hábil a las
-     10:00. Prueba también las 20:00: debería decir que está fuera de la disponibilidad.
-   - Agenda a **tres** pacientes de Lucía el mismo día a la misma hora: los tres entran. Un
-     cuarto turno en ese horario, o repetir un paciente, muestra un aviso.
-   - Crea un paciente ficticio nuevo y asígnale un profesional responsable.
+1. Entra con la cuenta de Administración que creó `python -m app.instalar_clinica`.
+2. En **Usuarios**, crea una cuenta de Recepción para cada sucursal (Central, Anexo, Pando) y
+   dos profesionales, con sus sucursales marcadas.
+3. Con Recepción, crea pacientes **ficticios**, asígnales responsable y dales turnos en la
+   **Agenda** de su sucursal.
+4. Con cada profesional, revisa que ve solo a sus pacientes y prueba la historia clínica,
+   los informes y los accesos compartidos.
+5. Con Administración, revisa **Auditoría** y el **Informe mensual** por sucursal.
 
-2. **Profesional responsable** (`lucia@aurora.demo`)
-   - Ves solo a Valentina, Martín y Carla.
-   - En la historia clínica de Valentina, crea una nota y luego **corrígela**. Marca
-     “Mostrar versiones corregidas”: las dos versiones siguen visibles, con el motivo.
-   - En **Informes**, abre el borrador de ejemplo, edítalo y **finalízalo**. Ya no se puede
-     editar.
-   - En **Accesos**, verás que Mateo es colaborador. Revócale el acceso indicando un motivo.
-
-3. **Profesional colaborador** (`mateo@aurora.demo`)
-   - Después del paso anterior, Valentina ya no aparece en su lista.
-   - Si Lucía vuelve a concederle acceso, la recupera.
-
-4. **Otra profesional** (`sofia@aurora.demo`)
-   - Solo ve a Elena. Si pegas en la barra de direcciones el enlace de la ficha de
-     Valentina, aparece “Paciente no encontrado”.
-
-5. **Administración** (`admin@aurora.demo`)
-   - **Auditoría** muestra quién consultó o modificó qué, y cuándo, sin textos clínicos.
-   - **Usuarios**: crea una cuenta ficticia y desactívala. Pulsa **Editar** en otra cuenta y
-     cámbiale el correo: esa persona tendrá que volver a entrar con el correo nuevo.
-   - **Usuarios → Especialidades**: la demo ya trae *Fonoaudiología*. Agrega otra (por ejemplo
-     *Psicopedagogía*) y crea una cuenta profesional con esa especialidad: aparecerá en
-     Agenda y en Accesos con su especialidad.
-   - **Usuarios → Eliminar** en una cuenta: desaparece de la lista y no puede entrar. Marca
-     *Mostrar eliminadas* para verla y **Restaurar**la (vuelve desactivada).
-   - En la ficha de un paciente no aparece “Historia clínica”. En “Informes” ves solo los
-     informes **finalizados**, en modo lectura, con el botón **Imprimir / PDF**.
-
-6. **Otra clínica** (`admin@boreal.demo`)
-   - Solo ves a “Pablo Boreal-Demo”. Ningún dato de Aurora es visible.

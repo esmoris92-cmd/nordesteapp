@@ -1,5 +1,5 @@
 """Exportación completa de los datos de UNA clínica (o de un espacio de profesional
-independiente) en un archivo .zip, para entregárselo cuando deja de usar Lumen.
+independiente) en un archivo .zip, para entregárselo cuando deja de usar Nordeste.
 
 La genera solo el dueño del sistema (``routers/owner_export.py``). Lleva TODO lo de esa clínica
 y nada de otra: cada consulta filtra por ``clinic_id`` (y la base, con sus claves foráneas
@@ -88,7 +88,7 @@ SECTION_FIELD_LABELS = {"texto": "Texto", "abordaje": "Abordaje", "en_suma": "En
                         "sugerencias": "Sugerencias"}
 CASH_KIND_LABELS = {"income": "Entrada", "expense": "Salida"}
 WEEKDAYS = ("Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo")
-SUPPORT = "Soporte de Lumen / sistema"  # acciones sin cuenta de la clínica (las del dueño)
+SUPPORT = "Soporte de Nordeste / sistema"  # acciones sin cuenta de la clínica (las del dueño)
 
 _UNSAFE_NAME = re.compile(r'[\x00-\x1f\x7f/\\:*?"<>|]+')
 
@@ -575,7 +575,7 @@ class _ClinicExporter:
             ("Incluye transporte", _yes_no(c.transport_included)), ("Presupuesto mensual", c.monthly_budget),
             ("Arancel AYEX", c.ayex_fee),
             ("Funciones deshabilitadas", ", ".join(f.label for f in FEATURES if f.key in disabled) or "Ninguna"),
-            ("Alta en Lumen", self.local(c.created_at)), ("Suspendida desde", self.local(c.suspended_at)),
+            ("Alta en Nordeste", self.local(c.created_at)), ("Suspendida desde", self.local(c.suspended_at)),
             ("Logo", f"clinica/{self.logo_name}" if self.logo_name else "Sin logo"),
         ]:
             t.add([k, v])
@@ -827,7 +827,7 @@ class _ClinicExporter:
             '(Windows) y elegí «Guardar como PDF».</p>'
             f'<header><div class="clinic">{logo}<strong>{esc(self.clinic.name)}</strong></div>'
             f"<h1>{esc(title)}</h1></header>{body}"
-            f"<footer>Exportado de Lumen el {self.now:%d/%m/%Y %H:%M}. Documento confidencial: contiene datos "
+            f"<footer>Exportado de Nordeste el {self.now:%d/%m/%Y %H:%M}. Documento confidencial: contiene datos "
             "personales y de salud.</footer></div></body></html>"
         )
 
@@ -889,7 +889,7 @@ class _ClinicExporter:
         signers = self._signers(r)
         body = ""
         if r.status != "final":
-            body += ('<p class="warn">BORRADOR: este informe no se finalizó en Lumen. Puede estar incompleto '
+            body += ('<p class="warn">BORRADOR: este informe no se finalizó en Nordeste. Puede estar incompleto '
                      "y no fue firmado.</p>")
         body += _facts(self._patient_facts(p) + [
                         ("Profesionales" if len(signers) > 1 else "Profesional", ", ".join(n for n, _ in signers)),
@@ -1062,8 +1062,8 @@ class _ClinicExporter:
         counts = {t.name: t.count for t in self.tables}
         L: list[str] = []
         L += [f"EXPORTACIÓN COMPLETA DE DATOS — {c.name}", "=" * 60, "",
-              f"Generada por Lumen el {self.now:%d/%m/%Y a las %H:%M} (hora de Uruguay).",
-              f"Contiene todos los datos de esta {kind} guardados en Lumen hasta ese momento, y ningún dato",
+              f"Generada por Nordeste el {self.now:%d/%m/%Y a las %H:%M} (hora de Uruguay).",
+              f"Contiene todos los datos de esta {kind} guardados en Nordeste hasta ese momento, y ningún dato",
               "de otras clínicas.", "",
               "CONFIDENCIAL: este archivo contiene datos personales y de salud de pacientes. Guardalo en un",
               "lugar seguro (por ejemplo, una carpeta o disco cifrado) y no lo envíes por correo común.", "",
@@ -1085,7 +1085,7 @@ class _ClinicExporter:
               "  - anamnesis.html: la ficha de anamnesis vigente y todas sus versiones anteriores, con firmas.",
               "  - informes/: un documento por informe, con firmas. Los que dicen BORRADOR no se finalizaron.",
               "  - archivos/: los adjuntos con su nombre original y la fecha en que se subieron.",
-              "    archivos/retirados/: los que alguien retiró en Lumen (no se borraban, solo se ocultaban).",
+              "    archivos/retirados/: los que alguien retiró en Nordeste (no se borraban, solo se ocultaban).",
               "  Los .html se abren con doble clic en cualquier navegador. Para guardarlos como PDF:",
               "  Cmd + P (Mac) o Ctrl + P (Windows) y elegir «Guardar como PDF».", "",
               "planillas/", "  Una planilla Excel (.xlsx) por tipo de dato, para mirar, ordenar y filtrar. Se abren",
@@ -1122,8 +1122,8 @@ class _ClinicExporter:
             "19-titulos-profesionales": "índice de los títulos subidos por los profesionales",
             "20-cajas": "cajas diarias",
             "21-movimientos-de-caja": "entradas y salidas de cada caja",
-            "22-auditoria": "registro de auditoría: quién hizo qué y cuándo («Soporte de Lumen» son las "
-                            "acciones del responsable de Lumen)",
+            "22-auditoria": "registro de auditoría: quién hizo qué y cuándo («Soporte de Nordeste» son las "
+                            "acciones del responsable de Nordeste)",
         }
         for t in sorted(self.tables, key=lambda t: t.name):
             line = f"- {t.name}: {descriptions.get(t.name, '')} ({t.count} {'fila' if t.count == 1 else 'filas'})"
@@ -1141,7 +1141,7 @@ class _ClinicExporter:
               "Acceso a un paciente: Responsable (profesional a cargo) · Colaborador/a (acceso compartido).",
               "Rol de una cuenta: " + " · ".join(ROLE_LABELS.values()) + ".",
               "Estado de un objetivo: " + " · ".join(GOAL_STATUS_LABELS.values()) + ".",
-              "Las notas clínicas, anamnesis y secciones nunca se editaban ni se borraban en Lumen: cada cambio",
+              "Las notas clínicas, anamnesis y secciones nunca se editaban ni se borraban en Nordeste: cada cambio",
               "es una versión o corrección nueva, y acá están todas.", ""]
         if self.warnings:
             L += ["AVISOS", "------", *[f"- {w}" for w in self.warnings], ""]

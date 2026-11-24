@@ -1,4 +1,4 @@
-// Pantalla del dueño del sistema (lumengestion.uy/sistema): clínicas (resumen, espacio, funciones y
+// Pantalla del dueño del sistema (<dominio>/sistema): clínicas (resumen, espacio, funciones y
 // acceso), alta, suspensión y auditoría. Sesión aparte de las clínicas y SIN datos de pacientes.
 import { useCallback, useEffect, useState, type ChangeEvent, type FormEvent, type ReactNode } from "react";
 import { api, ApiError, setCsrfToken, setUnauthorizedHandler } from "../api";
@@ -37,7 +37,7 @@ export function OwnerApp() {
   const refresh = useCallback(() => api.get<OwnerSession>("/owner/auth/me").then(apply), [apply]);
 
   useEffect(() => {
-    document.title = "Lumen · Dueño del sistema";
+    document.title = "Nordeste · Dueño del sistema";
     // Primero se comprueba si ya hay sesión; recién después un 401 significa "expiró".
     refresh()
       .catch((err) => {
@@ -116,7 +116,7 @@ function OwnerLogin({ notice, onLogin }: { notice: Notice; onLogin: (s: OwnerSes
   return (
     <main className="login">
       <form className="card login-card" onSubmit={submit}>
-        <h1><Logo /> Lumen</h1>
+        <h1><Logo /> Nordeste</h1>
         <p className="muted">Dueño del sistema</p>
         {notice?.tone === "ok" ? <SuccessBox message={notice.text} /> : <WarnBox message={notice?.text} />}
         <ErrorBox message={error} />
@@ -178,7 +178,7 @@ function TotpSetup({ onDone }: { onDone: () => void }) {
             <li>Instalá la app en el celular y abrila.</li>
             <li>
               Tocá <strong>+</strong> y elegí <em>Ingresar una clave de configuración</em> (o <em>Introducir
-              clave</em>). Cuenta: <strong>Lumen</strong>. Clave:
+              clave</em>). Cuenta: <strong>Nordeste</strong>. Clave:
               <div className="totp-secret"><code>{secret}</code> <CopyButton text={secret.replace(/ /g, "")} /></div>
               Tipo: <em>Basada en el tiempo</em>.
             </li>
@@ -220,7 +220,7 @@ function OwnerShell({ name, onLogout }: { name: string; onLogout: () => void }) 
         <div className="brand">
           <Logo />
           <div>
-            <strong>Lumen</strong>
+            <strong>Nordeste</strong>
             <small>Dueño del sistema</small>
           </div>
         </div>

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Copias de seguridad AUTOMÁTICAS de Lumen, una vez por día (usa launchd, que trae macOS).
+# Copias de seguridad AUTOMÁTICAS de Nordeste, una vez por día (usa launchd, que trae macOS).
 #
 #   bash scripts/copias-automaticas.sh instalar         activa la copia diaria a las 22:00
 #   bash scripts/copias-automaticas.sh instalar 13:30   activa la copia diaria a esa hora

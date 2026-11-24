@@ -34,3 +34,6 @@ backend/storage/
 *.xls
 !docs/ejemplo-importacion-pacientes.csv
 !backend/app/forms/cronograma_bps.xlsx
+
+# Destino del servidor de Nordeste (local de cada Mac)
+scripts/servidor/destino.env

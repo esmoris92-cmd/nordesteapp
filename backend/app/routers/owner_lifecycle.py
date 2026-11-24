@@ -6,7 +6,7 @@
   profesional sigue siendo profesional y responsable de sus pacientes). No tiene vuelta atrás
   desde la pantalla.
 
-* **Borrar todos los datos de una clínica** que dejó de usar Lumen (ver ``app/clinic_purge.py``).
+* **Borrar todos los datos de una clínica** que dejó de usar Nordeste (ver ``app/clinic_purge.py``).
   Candados, todos obligatorios:
     1. La clínica está suspendida hace al menos ``PURGE_MIN_DAYS`` días.
     2. Se generó una exportación completa DESPUÉS de suspenderla, o se escribe el motivo de por
@@ -78,7 +78,7 @@ def convert_to_clinic(clinic_id: uuid.UUID, payload: ConvertIn, request: Request
         raise HTTPException(422, detail="Para confirmar, escribí el nombre del consultorio tal como aparece arriba.")
     if db.scalar(select(User.id).where(User.email == payload.admin_email)):
         raise HTTPException(status.HTTP_409_CONFLICT,
-                            detail="Ese correo ya se usa en otra cuenta de Lumen (también la del profesional). "
+                            detail="Ese correo ya se usa en otra cuenta de Nordeste (también la del profesional). "
                                    "Usá otro correo para Administración.")
     temporary = temporary_password()
     admin = User(clinic_id=clinic.id, email=payload.admin_email, full_name=payload.admin_full_name,

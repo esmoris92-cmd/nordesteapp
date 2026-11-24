@@ -16,7 +16,7 @@ pausarlo antes de la fecha de conteo. Por eso se muestra también cuántos pacie
 tuvieron algún turno REALIZADO en el mes corriente (en hora de la clínica).
 
 Lo que hace el dueño queda en su propia auditoría y también en la de la clínica (como
-"Soporte de Lumen"), así la clínica sabe cuándo se tocó algo de su cuenta.
+"Soporte de Nordeste"), así la clínica sabe cuándo se tocó algo de su cuenta.
 """
 
 import uuid
@@ -205,7 +205,7 @@ def create_clinic(payload: ClinicCreateIn, request: Request,
         raise HTTPException(status.HTTP_409_CONFLICT, detail="Ya existe una clínica con ese nombre.")
     if db.scalar(select(User.id).where(User.email == payload.admin_email)):
         raise HTTPException(status.HTTP_409_CONFLICT,
-                            detail="Ese correo ya se usa en otra cuenta de Lumen. Usá otro correo.")
+                            detail="Ese correo ya se usa en otra cuenta de Nordeste. Usá otro correo.")
     clinic = Clinic(name=payload.name, timezone="America/Montevideo", kind=payload.kind.value,
                     disabled_features=list(INDEPENDENT_DISABLED_FEATURES) if independent else [])
     db.add(clinic)

@@ -1,6 +1,6 @@
-# Lumen en un servidor (prueba en DigitalOcean)
+# Nordeste en un servidor (prueba en DigitalOcean)
 
-Esta guía instala Lumen en un servidor en internet, con conexión segura (HTTPS), para
+Esta guía instala Nordeste en un servidor en internet, con conexión segura (HTTPS), para
 **probarlo con datos ficticios** desde las sucursales. Al terminar, el servidor se elimina
 para que no siga cobrando.
 
@@ -13,7 +13,7 @@ para que no siga cobrando.
 | Script | Dónde se ejecuta | Qué hace |
 |---|---|---|
 | `scripts/servidor/desplegar.sh` | En tu Mac | Compila la interfaz, arma un paquete con el código guardado en Git (nunca `.env`, copias ni archivos de pacientes), lo envía al servidor y ejecuta el instalador |
-| `scripts/servidor/instalar.sh` | En el servidor (lo ejecuta el anterior) | Instala PostgreSQL, Python y Caddy; crea la base con una contraseña al azar; deja Lumen como servicio que se reinicia solo; activa HTTPS automático y un cortafuegos (solo puertos 22, 80 y 443) |
+| `scripts/servidor/instalar.sh` | En el servidor (lo ejecuta el anterior) | Instala PostgreSQL, Python y Caddy; crea la base con una contraseña al azar; deja Nordeste como servicio que se reinicia solo; activa HTTPS automático y un cortafuegos (solo puertos 22, 80 y 443) |
 
 ## 1. Una llave SSH en tu Mac (una sola vez)
 
@@ -57,56 +57,43 @@ privada.
 
 **Recomendado:** *Settings → Billing → Billing alerts* y pon un aviso, por ejemplo, de USD 5.
 
-## 3. Instalar Lumen (desde tu Mac)
+## 3. Instalar Nordeste (desde tu Mac)
 
 ```bash
-cd ~/Developer/medflow && bash scripts/servidor/desplegar.sh 164.90.123.45 --demo
+cd ~/Developer/nordesteapp && bash scripts/servidor/desplegar.sh 164.90.123.45
 ```
 
-(con la IP de tu servidor). Qué vas a ver:
+(con la IP de tu servidor; si ya hay dominio apuntando a esa IP, agrégalo al final, por
+ejemplo `... 164.90.123.45 app.nordeste.com.uy`). Qué vas a ver:
 
 * "Are you sure you want to continue connecting (yes/no)?" → escribe `yes` (solo la primera vez).
 * Te pide la frase de contraseña de tu llave SSH (dos veces: al enviar y al instalar).
-* Los pasos `1/7` a `7/7`; la instalación tarda unos minutos.
-* Al final:
+* Los pasos `1/8` a `8/8`; la instalación tarda unos minutos.
+* La primera vez crea la clínica **Centro Interdisciplinario Nordeste** con las sucursales
+  **Central, Anexo y Pando** y la primera cuenta de **Administración**. Al final muestra:
 
   ```
-  ✅ Lumen está funcionando en:   https://164-90-123-45.sslip.io
-     Contraseña de todas (anótala; no se vuelve a mostrar):  Demo-…-Prueba
+  ✅ Nordeste está funcionando en:   https://164-90-123-45.sslip.io
+     Primera cuenta de Administración (anotala; no se vuelve a mostrar):
+     Administración:       administracion@nordeste.example.com
+     Contraseña temporal:  …
   ```
 
 `sslip.io` es un servicio gratuito que da un nombre a la IP para poder tener HTTPS.
 
-## 4. Probarlo
+El correo de Administración es **provisorio**: cámbialo desde *Usuarios* por el real de la
+clínica. Nunca se cargan datos de demostración.
 
-Abre la dirección `https://…sslip.io` desde cualquier equipo o celular, en cualquier sucursal,
-y entra con las cuentas de demostración (`admin@aurora.demo`, `recepcion.pando@aurora.demo`,
-etc.) y la contraseña que mostró el instalador.
+## 4. Primeros pasos en la clínica
 
-Para actualizar el servidor con cambios nuevos de Lumen (después de guardarlos en Git),
-repite el mismo comando: conserva la base y la configuración.
+1. Entra con la cuenta de Administración y la contraseña temporal; elige una nueva.
+2. *Usuarios*: crea las cuentas de Recepción (una por sucursal) y de cada profesional, y
+   asígnales sus sucursales.
+3. *Clínica*: carga el logo, teléfono, dirección y los datos del BPS.
 
-## 5. Eliminar el servidor al terminar (para que no siga cobrando)
-
-En DigitalOcean: el Droplet → **Destroy** → **Destroy this Droplet** → escribe su nombre para
-confirmar. Después revisa en *Billing* que no quede nada activo.
-
-Al eliminarlo se borra todo lo que tenía (eran datos ficticios).
-
-## Direcciones (servidor propio)
-
-- `https://lumengestion.uy`: la página promocional (archivo `sitio/index.html`). En el
-  servidor se copia a `/var/www/lumen-sitio`. `www.lumengestion.uy` redirige ahí, y
-  `lumengestion.uy/sistema` o `/api/...` llevan a Lumen.
-- `https://app.lumengestion.uy`: Lumen (las clínicas y `/sistema`). De respaldo,
-  `https://190-64-205-231.sslip.io` también muestra Lumen.
-- Las arma `scripts/servidor/actualizar.sh` con `LUMEN_SITIO` (Lumen) y `LUMEN_WEB`
-  (página promocional). El número de WhatsApp de la página está al final de
-  `sitio/index.html` (`WHATSAPP_NUMERO`).
-- Para cambiar los textos de la página sin tocar el código: `bash scripts/editar-pagina.sh`
-  (abre un editor en el navegador, solo en esta Mac; clic en un texto, cambiarlo y «Guardar
-  cambios»; Control + C en la Terminal para cerrarlo). Para publicar lo guardado:
-  `bash scripts/publicar-pagina.sh` (commit de `sitio/`, `actualizar.sh` y, si se quiere, `git push`).
+Para actualizar el servidor con cambios nuevos (después de guardarlos en Git), repite el
+mismo comando o usa `scripts/servidor/actualizar.sh` (pide `NORDESTE_SSH` y `NORDESTE_SITIO`):
+conserva la base, los archivos y la configuración.
 
 ## Dueño del sistema (pantalla /sistema)
 
@@ -115,7 +102,7 @@ primer administrador, suspender o reactivar el acceso de una clínica y darle un
 temporal a un administrador que perdió la suya. **No muestra pacientes ni historia clínica**:
 de cada clínica solo cantidades y sus cuentas de Administración.
 
-- Dirección: `https://app.lumengestion.uy/sistema` (en la Mac: `http://localhost:8000/sistema`).
+- Dirección: `https://<dominio>/sistema` (en la Mac: `http://localhost:8000/sistema`).
 - Pide correo, contraseña y un **código de 6 dígitos** de una app del celular (Google
   Authenticator o Microsoft Authenticator).
 - La cuenta no se crea desde la pantalla: se crea con un comando, desde la Mac.
@@ -147,7 +134,7 @@ Si la VPS se borra o se rompe, la base y los archivos adjuntos se pierden con el
    últimas 14 en `/opt/medflow/copias`. Lo deja configurado `actualizar.sh`.
    Revisarla en el servidor: `systemctl list-timers lumen-copia.timer` y
    `journalctl -u lumen-copia -n 30`.
-2. **Una Mac baja la copia cada día** y conserva las últimas 30 en `~/Lumen-copias-servidor`.
+2. **Una Mac baja la copia cada día** y conserva las últimas 30 en `~/Nordeste-copias-servidor`.
    Esa es la copia que sirve si se pierde la VPS. La Mac tiene que tener **FileVault** activado
    (las copias tienen datos de pacientes).
 

@@ -212,7 +212,7 @@ function SummarySection({ d }: { d: ClinicDashboard }) {
                 : "ninguno tuvo turnos realizados este mes"} />
         <Tile title="Cuentas activas" value={NUMBER.format(activeAccounts)}
               hint={`${roles.admin ?? 0} de administración · ${roles.reception ?? 0} de recepción · ${roles.professional ?? 0} profesionales`} />
-        <Tile title="Usaron Lumen esta semana" value={NUMBER.format(d.active_accounts_7d)}
+        <Tile title="Usaron Nordeste esta semana" value={NUMBER.format(d.active_accounts_7d)}
               hint={`cuentas en los últimos 7 días (${NUMBER.format(d.active_accounts_30d)} en 30 días)`} />
         <Tile title="Espacio que ocupa" value={fmtBytes(d.storage.database_bytes + d.storage.files_bytes)}
               hint="base de datos (estimado) + archivos adjuntos" />
@@ -250,7 +250,7 @@ function SummarySection({ d }: { d: ClinicDashboard }) {
             <ColumnChart caption="Pacientes nuevos por mes" periodLabel="Mes"
                          items={d.new_patients_by_month.map((m) => ({ period: m.period, label: monthLabel(m.period), value: m.count }))} />
           </Card>
-          <Card title="Ingresos a Lumen">
+          <Card title="Ingresos a Nordeste">
             <p className="muted small card-sub">Inicios de sesión por día, últimos 30 días</p>
             <ColumnChart caption="Inicios de sesión por día" periodLabel="Día"
                          items={d.logins_by_day.map((x) => ({ period: x.period, label: fmtDate(x.period), value: x.count }))} />
@@ -682,7 +682,7 @@ function PurgeCard({ clinic }: { clinic: ClinicSummary }) {
     if (!ready || !s) return;
     if (!await askConfirm(`Última confirmación: se van a BORRAR todos los datos de ${clinic.name} ` +
       `(${NUMBER.format(s.patients)} pacientes, su historia clínica, cuentas y archivos). Antes se hace una copia de ` +
-      "seguridad. Esto no se puede deshacer desde Lumen.", { confirmLabel: "Borrar todos los datos", danger: true })) return;
+      "seguridad. Esto no se puede deshacer desde Nordeste.", { confirmLabel: "Borrar todos los datos", danger: true })) return;
     const ok = await run(async () => {
       await api.post(`/owner/clinics/${clinic.id}/purge`, { ...form, code: form.code.replace(/\s/g, "") });
     });
@@ -692,7 +692,7 @@ function PurgeCard({ clinic }: { clinic: ClinicSummary }) {
   return (
     <Card title="Borrar todos los datos">
       <p className="small">
-        Para cuando la clínica dejó Lumen y ya recibió sus datos. Borra pacientes, historia clínica, informes, turnos,
+        Para cuando la clínica dejó Nordeste y ya recibió sus datos. Borra pacientes, historia clínica, informes, turnos,
         caja, cuentas, auditoría y archivos de {clinic.name}; queda solo su nombre en tu lista y en tu auditoría.
         Antes se hace una copia de seguridad completa automática.
       </p>
@@ -747,9 +747,9 @@ function PurgeCertificate({ clinicId }: { clinicId: string }) {
       {!c ? <Loading /> : (
         <>
           <p>
-            Se borraron de Lumen todos los datos {c.independent ? "del consultorio" : "de la clínica"}{" "}
+            Se borraron de Nordeste todos los datos {c.independent ? "del consultorio" : "de la clínica"}{" "}
             <strong>{c.clinic_name}</strong> el {fmtDateTime(c.purged_at)}
-            {c.purged_by ? `, por ${c.purged_by} (responsable de Lumen)` : ""}.
+            {c.purged_by ? `, por ${c.purged_by} (responsable de Nordeste)` : ""}.
           </p>
           {c.reason && <p className="small">Motivo: {c.reason}</p>}
           <div className="table-wrap">

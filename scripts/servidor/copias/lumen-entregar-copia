@@ -31,7 +31,7 @@ case "${pedido[0]:-}" in
     cat "$ENTREGA/$nombre"
     ;;
   *)
-    echo "Esta llave solo sirve para bajar las copias de seguridad de Lumen." >&2
+    echo "Esta llave solo sirve para bajar las copias de seguridad de Nordeste." >&2
     exit 2
     ;;
 esac

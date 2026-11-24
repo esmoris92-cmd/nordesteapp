@@ -89,7 +89,7 @@ def test_form_is_filled_with_patient_data(world, login, db):
     assert (f["Cedula2"], f["PRIMER NOMBRERow1_2"], f["PRIMER APELLIDORow1_2"]) == (
         "23456783", "LAURA", "FICTICIA")
     assert f["Group14"] is not None and "2" in str(f["Group14"])  # transporte: NO
-    # Lo que Lumen no sabe queda vacío y editable.
+    # Lo que Nordeste no sabe queda vacío y editable.
     assert f.get("SOLAR") in (None, "") and f.get("N PROVEEDORRow1") in (None, "")
     # Queda en la auditoría (sin datos del paciente en los detalles).
     events = db.scalars(select(AuditEvent).where(AuditEvent.action == "patient.ayex_form")).all()

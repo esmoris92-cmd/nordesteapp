@@ -1,4 +1,4 @@
-"""Borra TODOS los pacientes de la base LOCAL, para dejar Lumen limpio antes de mostrarlo.
+"""Borra TODOS los pacientes de la base LOCAL, para dejar Nordeste limpio antes de mostrarlo.
 
 Uso (mejor con el script, que usa el entorno virtual):
     bash scripts/vaciar-pacientes.sh
@@ -10,7 +10,7 @@ Qué conserva: la clínica, las sucursales, las especialidades, los usuarios y s
 
 Por seguridad:
 * No funciona con ENVIRONMENT=production (un servidor con datos reales).
-* No funciona si Lumen está encendido (hay que detenerlo con Ctrl + C).
+* No funciona si Nordeste está encendido (hay que detenerlo con Ctrl + C).
 * Antes de borrar hace una copia de seguridad completa en ~/MedFlow-copias, que se puede
   restaurar con:  bash scripts/copia-seguridad.sh restaurar <archivo>
 * Pide escribir BORRAR PACIENTES para confirmar.
@@ -59,7 +59,7 @@ def main(argv: list[str] | None = None) -> int:
         print("❌ Esto es un servidor (ENVIRONMENT=production): no se borran pacientes desde aquí.")
         return 1
     if _server_running():
-        print("❌ Lumen está encendido. Detenelo (Control + C en su Terminal) y volvé a intentarlo.")
+        print("❌ Nordeste está encendido. Detenelo (Control + C en su Terminal) y volvé a intentarlo.")
         return 1
 
     database = make_url(settings.database_url).database
@@ -105,7 +105,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"❌ No se pudo hacer la copia de seguridad, así que no se borró nada: {exc}")
         return 1
     except OperationalError:
-        print("❌ Otro programa está usando la base de datos (¿Lumen abierto en otra Terminal?).")
+        print("❌ Otro programa está usando la base de datos (¿Nordeste abierto en otra Terminal?).")
         print("   Cerralo y volvé a intentarlo. No se borró nada.")
         return 1
     finally:
@@ -115,7 +115,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"✅ Listo: se borraron {before['patients']} pacientes y {removed} archivos adjuntos.")
     if any(after.values()):
         print(f"⚠️  Quedaron datos en: {', '.join(t for t, n in after.items() if n)}")
-    print("   Usuarios, sucursales y horarios siguen igual. Ya podés iniciar Lumen.")
+    print("   Usuarios, sucursales y horarios siguen igual. Ya podés iniciar Nordeste.")
     print(f"   Para deshacerlo: bash scripts/copia-seguridad.sh restaurar {backup}")
     return 0
 

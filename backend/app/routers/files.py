@@ -229,7 +229,7 @@ def download_file(
     user: CurrentUser = Depends(get_current_user),
     db: Session = Depends(get_db),
 ):
-    """Descarga el archivo. Con ``view=true`` es para verlo dentro de Lumen (visor de PDF o
+    """Descarga el archivo. Con ``view=true`` es para verlo dentro de Nordeste (visor de PDF o
     imagen): el contenido es el mismo y la auditoría lo registra como "file.view"."""
     (f, *_), _ = _get_file(db, user, file_id)
     if f.withdrawn_at is not None:
