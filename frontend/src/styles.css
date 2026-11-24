@@ -1,3 +1,10 @@
+/* Tipografía Plus Jakarta Sans (licencia OFL, ver public/fonts). */
+@font-face { font-family: "Plus Jakarta Sans"; font-style: normal; font-display: swap; font-weight: 200 800;
+  src: url("/fonts/plus-jakarta-sans-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: "Plus Jakarta Sans"; font-style: normal; font-display: swap; font-weight: 200 800;
+  src: url("/fonts/plus-jakarta-sans-latin-ext-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1E00-1E9F, U+20A0-20C0, U+2C60-2C7F, U+A720-A7FF; }
 /* Estilos de Lumen: sobrios, legibles y adaptables a pantallas pequeñas. */
 :root,
 .print-page {
@@ -714,48 +721,150 @@ tfoot .grand-total td, tfoot .grand-total th { border-top: 2px solid var(--line)
   .users-table td.row-actions { flex-wrap: wrap; gap: 0.4rem; padding-top: 0.5rem; }
 }
 
-/* ---------- Marca visible (Centro Interdisciplinario del Nordeste) ---------- */
-/* Barra superior en el azul del logo, con la franja de tres colores abajo. */
+/* ======================================================================
+   Diseño Nordeste: barra lateral oscura, tarjetas redondeadas con brillo suave,
+   botones tipo píldora y tipografía Plus Jakarta Sans (alojada en public/fonts).
+   ====================================================================== */
+:root {
+  font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  --radius: 18px;
+  --sidebar-w: 256px;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --nav-from: #08122b;       /* barra lateral: azul noche */
+  --nav-to: #0b2259;
+  --shadow-card: 0 1px 2px rgba(16, 24, 40, 0.04), 0 12px 28px -16px rgba(14, 40, 100, 0.18);
+  --shadow-card-hover: 0 1px 2px rgba(16, 24, 40, 0.05), 0 22px 40px -18px rgba(14, 60, 150, 0.32);
+  --glow: 0 10px 26px -10px rgba(var(--brand-rgb), 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.28);
+}
+:root, .print-page { --bg: #f4f6fb; --line: #e2e8f2; }
+body { -webkit-font-smoothing: antialiased; }
+h1, h2, .home-title, .stat-value { letter-spacing: -0.02em; }
+h1 { font-weight: 800; }
+h2 { font-weight: 700; }
+
+/* ---------- Barra superior (celular y tablet) ---------- */
 .topbar {
   position: relative; color: #fff; border-bottom: 0;
-  background: linear-gradient(100deg, var(--banner-from), var(--banner-to));
-  box-shadow: 0 2px 10px rgba(10, 30, 70, 0.18);
+  background: linear-gradient(110deg, var(--nav-from), var(--nav-to));
+  box-shadow: 0 6px 20px -8px rgba(8, 18, 43, 0.5);
 }
 .topbar::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 4px;
-  background: linear-gradient(90deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, #0e4db7 66.6%);
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, #3b7bf0 66.6%);
 }
-.topbar .logo { background: #fff; border-radius: 50%; padding: 2px; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35); }
-.brand small, .whoami small { color: rgba(255, 255, 255, 0.78); }
-.topbar nav a { color: rgba(255, 255, 255, 0.9); position: relative; }
-.topbar nav a:hover { background: rgba(255, 255, 255, 0.16); color: #fff; }
+.topbar .logo { background: #fff; border-radius: 12px; padding: 3px; }
+.brand strong { font-size: 1.05rem; font-weight: 800; letter-spacing: -0.01em; }
+.brand small, .whoami small { color: rgba(255, 255, 255, 0.62); }
+.topbar nav a { color: rgba(255, 255, 255, 0.78); position: relative; border-radius: 12px; font-weight: 500; }
+.topbar nav a:hover { background: rgba(255, 255, 255, 0.08); color: #fff; }
 .topbar nav a[aria-current="page"] {
-  background: #fff; color: #0e4db7; font-weight: 700;
-  box-shadow: inset 0 -3px 0 var(--accent-green), 0 2px 6px rgba(0, 0, 0, 0.15);
+  color: #fff; font-weight: 700;
+  background: linear-gradient(135deg, #2f6fe0, #0e4db7 60%, #0a3b8f); box-shadow: var(--glow);
 }
-.topbar .btn, .topbar .menu-toggle { color: #fff; background: transparent; border-color: rgba(255, 255, 255, 0.4); }
-.topbar .btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.16); }
+.topbar .btn, .topbar .menu-toggle { color: #fff; background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.16); }
+.topbar .btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.14); box-shadow: none; }
 .topbar .branch-badge span, .topbar .branch-badge select {
-  color: #fff; background: rgba(255, 255, 255, 0.16); border-color: rgba(255, 255, 255, 0.35);
+  color: #d9e6ff; background: rgba(110, 155, 234, 0.16); border-color: rgba(110, 155, 234, 0.35);
 }
 .topbar .branch-badge option { color: #142843; background: #fff; }
-.topbar :focus-visible { box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.7); }
-/* Título de cada pantalla con una rayita de los tres colores. */
-.page-title h1 { position: relative; padding-bottom: 0.35rem; }
+.topbar :focus-visible { box-shadow: 0 0 0 3px rgba(198, 234, 90, 0.7); }
+
+/* ---------- Barra lateral (computadora) ---------- */
+@media (min-width: 1024px) {
+  .app { padding-left: var(--sidebar-w); }
+  .topbar {
+    position: fixed; top: 0; left: 0; bottom: 0; z-index: 60; width: var(--sidebar-w);
+    flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 1.25rem;
+    padding: 1.4rem 0.9rem 1rem; overflow-y: auto;
+    background: linear-gradient(180deg, var(--nav-from), var(--nav-to));
+    box-shadow: 8px 0 30px -18px rgba(8, 18, 43, 0.6);
+  }
+  .topbar::after {
+    left: auto; right: 0; top: 0; bottom: 0; width: 3px; height: auto;
+    background: linear-gradient(180deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, #3b7bf0 66.6%);
+  }
+  .brand { align-items: flex-start; padding: 0 0.35rem 1rem; border-bottom: 1px solid rgba(255, 255, 255, 0.08); }
+  .topbar nav { flex: 1; flex-direction: column; flex-wrap: nowrap; gap: 0.25rem; }
+  .topbar nav a { padding: 0.65rem 0.9rem; }
+  .topbar nav a[aria-current="page"]::before {
+    content: ""; position: absolute; left: -0.9rem; top: 22%; bottom: 22%; width: 4px; border-radius: 0 4px 4px 0;
+    background: var(--accent-green);
+  }
+  .whoami {
+    flex-direction: column; align-items: stretch; text-align: left; gap: 0.6rem;
+    padding: 1rem 0.35rem 0; border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .whoami .btn { width: 100%; }
+  .content { max-width: 1240px; padding: 2rem 2rem 4rem; }
+}
+
+/* ---------- Títulos ---------- */
+.page-title h1, .home-title { font-size: 1.85rem; }
+.page-title h1 { position: relative; padding-bottom: 0.45rem; }
 .page-title h1::after {
-  content: ""; position: absolute; left: 0; bottom: 0; width: 56px; height: 4px; border-radius: 2px;
+  content: ""; position: absolute; left: 0; bottom: 0; width: 44px; height: 4px; border-radius: 4px;
   background: linear-gradient(90deg, var(--accent-red) 0 33.3%, var(--accent-green) 33.3% 66.6%, var(--brand) 66.6%);
 }
-/* Pestañas activas en azul lleno; insignias e indicadores con los colores del logo. */
-.tab.active { background: var(--brand-soft); border-radius: 8px 8px 0 0; border-bottom-width: 3px; }
-.badge { font-weight: 600; }
+/* Etiquetas pequeñas en mayúsculas con letra monoespaciada. */
+th, .stat-label, .info-field dt, .home-eyebrow {
+  font-family: var(--mono); letter-spacing: 0.06em;
+}
+th { font-size: 0.72rem; color: var(--muted); }
+.field label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); font-weight: 700; }
+.stat-label { font-size: 0.75rem; text-transform: uppercase; color: var(--muted); }
+.stat-value { font-weight: 800; }
+
+/* ---------- Tarjetas ---------- */
+.card { border-color: var(--line); box-shadow: var(--shadow-card); padding: 1.25rem 1.5rem; }
+.card:hover { box-shadow: var(--shadow-card-hover); }
+.modal .card, .card .card { box-shadow: none; }
+.stat-icon { border-radius: 14px; }
+
+/* ---------- Botones tipo píldora ---------- */
+.btn { border-radius: 999px; padding: 0.5rem 1.1rem; font-weight: 600; position: relative; overflow: hidden; }
+.btn-small { padding: 0.25rem 0.7rem; }
+.btn-primary {
+  border-color: transparent; color: #fff;
+  background: linear-gradient(135deg, #2f6fe0, #0e4db7 55%, #0a3b8f); box-shadow: var(--glow);
+}
+.btn-primary:hover { background: linear-gradient(135deg, #3c7cf0, #1257cc 55%, #0c44a3); }
+/* Destello que cruza el botón principal al pasar el mouse. */
+.btn-primary::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 45%; pointer-events: none;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+  transform: skewX(-20deg); opacity: 0;
+}
+.btn-primary:not(:disabled):hover::after { animation: shine 700ms ease-out; }
+
+/* ---------- Campos ---------- */
+input, select, textarea { border-radius: 12px; padding: 0.6rem 0.8rem; }
+input:focus, select:focus, textarea:focus { box-shadow: 0 0 0 4px rgba(var(--brand-rgb), 0.16); }
+
+/* ---------- Pestañas, insignias, tablas ---------- */
+.tabs { border-bottom: 0; gap: 0.35rem; }
+.tab { border: 0; border-radius: 999px; padding: 0.45rem 1rem; }
+.tab:hover { background: var(--brand-soft); color: var(--brand); }
+.tab.active { background: var(--brand); color: #fff; box-shadow: var(--glow); }
+.patient-tabs { border-radius: 0 0 var(--radius) var(--radius); }
+.ptab { border-radius: 999px; }
+.ptab.active { box-shadow: var(--glow); }
+.badge { font-weight: 600; padding: 0.15rem 0.6rem; }
 .badge-info { background: var(--brand-soft); color: var(--brand); border-color: rgba(var(--brand-rgb), 0.25); }
 .badge-ok { border-color: var(--ok-line); }
 .badge-danger { border-color: var(--danger-line); }
 .note { border-left-width: 4px; }
-th { color: var(--brand); }
-.card { border-top: 3px solid var(--brand); }
-.modal .card, .card .card { border-top-width: 1px; border-top-color: var(--line); }
+.empty { border-radius: 14px; border: 1px dashed var(--line); }
+
+/* ---------- Ingreso ---------- */
+.login {
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(59, 123, 240, 0.35), transparent 60%),
+    radial-gradient(700px 400px at 110% 110%, rgba(177, 222, 35, 0.18), transparent 60%),
+    linear-gradient(160deg, var(--nav-from), var(--nav-to));
+}
+.login-card { box-shadow: 0 30px 70px -30px rgba(0, 0, 0, 0.6); }
+.modal { border-radius: 20px; }
+.theme-toggle { box-shadow: var(--shadow-card-hover); }
 
 /* ---------- Animaciones ----------
    Visibles pero cortas. Se desactivan si el equipo pide reducir el movimiento. */
@@ -770,9 +879,17 @@ body { transition: background-color var(--t-med) ease, color var(--t-med) ease; 
 .btn:not(:disabled):hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(var(--brand-rgb), 0.18); }
 .btn-primary:not(:disabled):hover { box-shadow: 0 8px 18px rgba(var(--brand-rgb), 0.38); }
 .btn:not(:disabled):active { transform: translateY(0) scale(0.95); box-shadow: none; transition-duration: 70ms; }
-.topbar nav a:hover { transform: translateY(-1px); }
 .topbar nav a:active, .ptab:active, .tab:active { transform: scale(0.95); }
-.ptab.active, .topbar nav a[aria-current="page"] { animation: pop-in 320ms var(--ease-pop); }
+.ptab.active, .tab.active, .topbar nav a[aria-current="page"] { animation: pop-in 320ms var(--ease-pop); }
+/* Al entrar, los elementos del menú lateral aparecen uno tras otro. */
+@media (min-width: 1024px) {
+  .topbar nav a { animation: nav-in 420ms var(--ease) both; }
+  .topbar nav a:nth-child(2) { animation-delay: 40ms; } .topbar nav a:nth-child(3) { animation-delay: 80ms; }
+  .topbar nav a:nth-child(4) { animation-delay: 120ms; } .topbar nav a:nth-child(5) { animation-delay: 160ms; }
+  .topbar nav a:nth-child(6) { animation-delay: 200ms; } .topbar nav a:nth-child(n+7) { animation-delay: 240ms; }
+  .topbar nav a[aria-current="page"] { animation: nav-in 420ms var(--ease) both; }
+}
+.topbar nav a:hover { transform: translateX(3px); }
 /* Al cambiar de pantalla: la pantalla nueva entra deslizándose, y sus tarjetas una tras otra. */
 .content > * { animation: page-in 380ms var(--ease) both; }
 .content .card { animation: rise-in 420ms var(--ease) both; }
@@ -800,8 +917,11 @@ tbody tr:hover td { background: rgba(var(--brand-rgb), 0.05); }
 .alert { animation: rise-in 300ms var(--ease) both; }
 /* "Cargando…" late suavemente. */
 p.muted[role="status"] { animation: pulse 1.1s ease-in-out infinite; }
+.login-card { animation: rise-in 520ms var(--ease) both; }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
-@keyframes page-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+@keyframes page-in { from { opacity: 0; transform: translateY(16px); filter: blur(6px); } to { opacity: 1; transform: none; filter: none; } }
+@keyframes shine { from { left: -60%; opacity: 1; } to { left: 130%; opacity: 1; } }
+@keyframes nav-in { from { opacity: 0; transform: translateX(-14px); } to { opacity: 1; transform: none; } }
 @keyframes rise-in { from { opacity: 0; transform: translateY(18px) scale(0.985); } to { opacity: 1; transform: none; } }
 @keyframes row-in { from { opacity: 0; transform: translateX(-10px); } to { opacity: 1; transform: none; } }
 @keyframes pop-in { 0% { transform: scale(0.85); opacity: 0.4; } 100% { transform: scale(1); opacity: 1; } }
@@ -870,6 +990,21 @@ p.muted[role="status"] { animation: pulse 1.1s ease-in-out infinite; }
   :root[data-theme="dark"] .modal-backdrop { background: rgba(0, 0, 0, 0.6); }
   :root[data-theme="dark"] .modal { border: 1px solid var(--line); }
   :root[data-theme="dark"] .picker-results { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45); }
+  /* Diseño Nordeste en modo oscuro: fondo azul noche y tarjetas tipo vidrio con brillo azul. */
+  :root[data-theme="dark"] {
+    --bg: #060b17; --surface: #0d1527; --line: #1c2843; --subtle: #0f1a30; --field-bg: #0f1a30; --field-line: #2a3a5c;
+    --nav-from: #040814; --nav-to: #0a1838;
+    --shadow-card: 0 0 0 1px rgba(110, 155, 234, 0.06), 0 24px 50px -30px rgba(14, 77, 183, 0.55);
+    --shadow-card-hover: 0 0 0 1px rgba(110, 155, 234, 0.16), 0 30px 60px -28px rgba(14, 77, 183, 0.75);
+  }
+  :root[data-theme="dark"] body {
+    background: radial-gradient(1000px 600px at 80% -10%, rgba(14, 77, 183, 0.22), transparent 60%), var(--bg) fixed;
+  }
+  :root[data-theme="dark"] .card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.012)), var(--surface);
+    border-color: rgba(110, 155, 234, 0.16);
+  }
+  :root[data-theme="dark"] .tab.active, :root[data-theme="dark"] .ptab.active { color: #fff; background: #1a5fd6; }
 }
 
 /* Botón para cambiar entre modo claro y oscuro (esquina inferior derecha) */
